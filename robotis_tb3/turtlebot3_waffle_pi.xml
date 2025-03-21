@@ -1,0 +1,30 @@
+<mujoco model="turtlebot3_waffle_pi">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+
+  <option integrator="implicitfast"/>
+
+  <asset>
+    <mesh name="waffle_pi_base" file="waffle_pi_base.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="left_tire" file="left_tire.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="right_tire" file="right_tire.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lds" file="lds.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <geom pos="-0.064 0 0.01" quat="1 0 0 0" type="mesh" rgba="0.4 0.4 0.4 1" mesh="waffle_pi_base"/>
+    <geom size="0.015 0.0045 0.01" pos="-0.177 -0.0639992 0.005" quat="0.707388 -0.706825 0 0" type="box"/>
+    <geom size="0.015 0.0045 0.01" pos="-0.177 0.0640008 0.005" quat="0.707388 -0.706825 0 0" type="box"/>
+    <geom pos="-0.049 0 0.1255" quat="1 0 0 0" type="mesh" rgba="0.3 0.3 0.3 1" mesh="lds"/>
+    <geom size="0.0075 0.015 0.0135" pos="0.078 0 0.107" type="box"/>
+    <body name="wheel_left_link" pos="0 0.144 0.033" quat="0.707388 -0.706825 0 0">
+      <inertial pos="0 0 0" quat="-0.000890159 0.706886 0.000889646 0.707326" mass="0.0284989" diaginertia="2.07126e-05 1.11924e-05 1.11756e-05"/>
+      <joint name="wheel_left_joint" pos="0 0 0" axis="0 0 1"/>
+      <geom quat="0.707388 0.706825 0 0" type="mesh" rgba="0.3 0.3 0.3 1" mesh="left_tire"/>
+    </body>
+    <body name="wheel_right_link" pos="0 -0.144 0.033" quat="0.707388 -0.706825 0 0">
+      <inertial pos="0 0 0" quat="-0.000890159 0.706886 0.000889646 0.707326" mass="0.0284989" diaginertia="2.07126e-05 1.11924e-05 1.11756e-05"/>
+      <joint name="wheel_right_joint" pos="0 0 0" axis="0 0 1"/>
+      <geom quat="0.707388 0.706825 0 0" type="mesh" rgba="0.3 0.3 0.3 1" mesh="right_tire"/>
+    </body>
+  </worldbody>
+</mujoco>

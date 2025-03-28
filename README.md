@@ -22,6 +22,6 @@ This repository and its associated codebase were made possible through the dedic
 Additionally, we extend our sincere appreciation to Professor Sungjoon Choi and Researcher Jihwan Yoon from the [Robot Intelligence Lab](https://sites.google.com/view/sungjoon-choi/home) at Korea University for their valuable contributions and insightful collaboration.
 
 # License
-XML and asset files in each individual model directory of this repository are subject to different license terms. Please consult the LICENSE files under each specific model subdirectory for the relevant license and copyright information.
+XML and asset files contained within each specific model directory of this repository are governed by their own distinct licensing conditions. Please refer to the LICENSE documentation located within each respective model's directory for comprehensive license terms and associated copyright details.
 
-All other content is Copyright 2025 ROBOTIS CO., LTD. and licensed under the Apache License, Version 2.0. A copy of this license is provided in the top-level LICENSE file in this repository. You can also obtain it from https://www.apache.org/licenses/LICENSE-2.0.
+All other materials are the intellectual property of ROBOTIS CO., LTD., © 2025, and are made available under the Apache License, Version 2.0. The full text of this license is included in the main LICENSE file at the repository's root. Additionally, it is accessible online at https://www.apache.org/licenses/LICENSE-2.0.

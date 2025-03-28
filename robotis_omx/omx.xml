@@ -5,7 +5,7 @@
 
   <default>
     <joint armature="0.1" damping="10.0"/>
-    <position kp="1000" forcerange="-100 100"/>
+    <position kp="1000" kv="200" forcerange="-100 100"/>
   </default>
 
   <asset>
@@ -46,6 +46,10 @@
               <joint name="gripper_right_joint" pos="0 0 0" axis="0 -1 0" type="slide" range="-0.01 0.019"  />
               <geom type="mesh" mesh="gripper_right_palm"/>
             </body>
+            <body name="end_effector_target" pos="0.14 0 0">
+              <inertial pos="0 0 0" mass="0.001" diaginertia="1e-06 1e-06 1e-06"/>
+              <geom type= "box" size="0.005 0.005 0.005" rgba="1 0 0 1" contype="0" conaffinity="0"/>
+            </body>
           </body>
         </body>
       </body>
@@ -63,8 +67,9 @@
     <position name="actuator_joint2" joint="joint2" ctrlrange="-1.5 1.5"/>
     <position name="actuator_joint3" joint="joint3" ctrlrange="-1.5 1.4"/>
     <position name="actuator_joint4" joint="joint4" ctrlrange="-1.7 1.97"/>
-    <position name="actuator_gripper_left_joint" joint="gripper_left_joint" ctrlrange="-0.01 0.019"/>
-    <position name="actuator_gripper_right_joint" joint="gripper_right_joint" ctrlrange="-0.01 0.019"/>
+    <position name="actuator_gripper_joint" joint="gripper_left_joint" ctrlrange="-0.01 0.019"/>
   </actuator>
-
+  <equality>
+    <joint name="equality_gripper" active="true" joint1="gripper_left_joint" joint2="gripper_right_joint" polycoef="0 1 0 0 0"/>
+  </equality>
 </mujoco>

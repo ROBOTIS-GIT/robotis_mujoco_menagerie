@@ -28,7 +28,7 @@ The models in this repository are designed for use with the MuJoCo physics engin
 # Acknowledgments
 
 This repository and its associated codebase were made possible through the dedicated efforts of the developers at [ROBOTIS](https://en.robotis.com/). The asset files for OP3 were developed by ROBOTIS, and we gratefully acknowledge the referenced XML model files utilized in the publicly available [OP3 model](https://github.com/google-deepmind/mujoco_menagerie/tree/main/robotis_op3).
-Additionally, we extend our sincere appreciation to Professor Sungjoon Choi, Researcher Jihwan Yoon and jeongeun Park from the [Robot Intelligence Lab](https://sites.google.com/view/sungjoon-choi/home) at Korea University for their valuable contributions and insightful collaboration.
+Additionally, we extend our sincere appreciation to Professor Sungjoon Choi, Researcher Jihwan Yoon and Jeongeun Park from the [Robot Intelligence Lab](https://sites.google.com/view/sungjoon-choi/home) at Korea University for their valuable contributions and insightful collaboration.
 
 # License
 XML and asset files contained within each specific model directory of this repository are governed by their own distinct licensing conditions. Please refer to the LICENSE documentation located within each respective model's directory for comprehensive license terms and associated copyright details.

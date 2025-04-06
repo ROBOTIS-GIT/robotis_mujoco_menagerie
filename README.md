@@ -1,6 +1,9 @@
 # robotis_mujoco_menagerie
 A collection of models for the MuJoCo physics engine from ROBOTIS
 
+## FFW-1
+<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw.png" width="300">
+
 ## OpenMANIPULATOR-Y
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_omy/omy.png" width="300">
 

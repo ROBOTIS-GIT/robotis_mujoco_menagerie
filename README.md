@@ -1,7 +1,7 @@
 # robotis_mujoco_menagerie
 A collection of models for the MuJoCo physics engine from ROBOTIS
 
-## FFW-BG2
+## AI Worker (FFW-BG2)
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw.png" width="300">
 
 ## OpenMANIPULATOR-Y

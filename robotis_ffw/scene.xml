@@ -1,5 +1,5 @@
 <mujoco model="ffw scene">
-  <include file="ffw.xml"/>
+  <include file="ffw_bg2.xml"/>
 
   <statistic center="0.3 0 0.4" extent="1"/>
 

@@ -36,28 +36,28 @@
 
   <!-- Assets -->
   <asset>
-    <mesh name="base_mobile_assy" file="ffw_bg2/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="left_wheel" file="ffw_bg2/left_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="right_wheel" file="ffw_bg2/right_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="rear_wheel" file="ffw_bg2/rear_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="lift_link" file="ffw_bg2/lift_link.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="body_arm_assy" file="ffw_bg2/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="head_link1" file="ffw_bg2/head_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="head_link2" file="ffw_bg2/head_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link1" file="ffw_bg2/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link2" file="ffw_bg2/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link3" file="ffw_bg2/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link4" file="ffw_bg2/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link5" file="ffw_bg2/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link6" file="ffw_bg2/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link7" file="ffw_bg2/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link1" file="ffw_bg2/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link2" file="ffw_bg2/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link3" file="ffw_bg2/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link4" file="ffw_bg2/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link5" file="ffw_bg2/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link6" file="ffw_bg2/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link7" file="ffw_bg2/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="base_mobile_assy" file="ffw_sg2/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="left_wheel" file="ffw_sg2/left_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="right_wheel" file="ffw_sg2/right_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="rear_wheel" file="ffw_sg2/rear_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lift_link" file="ffw_sg2/lift_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="body_arm_assy" file="ffw_sg2/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link1" file="ffw_sg2/head_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link2" file="ffw_sg2/head_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link1" file="ffw_sg2/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link2" file="ffw_sg2/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link3" file="ffw_sg2/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link4" file="ffw_sg2/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link5" file="ffw_sg2/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link6" file="ffw_sg2/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link7" file="ffw_sg2/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link1" file="ffw_sg2/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link2" file="ffw_sg2/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link3" file="ffw_sg2/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link4" file="ffw_sg2/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link5" file="ffw_sg2/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link6" file="ffw_sg2/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link7" file="ffw_sg2/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
     <mesh name="base" file="rh_p12_rn/base.stl" scale="0.001 0.001 0.001"/>
     <mesh name="r1" file="rh_p12_rn/r1.stl" scale="0.001 0.001 0.001"/>
     <mesh name="r2" file="rh_p12_rn/r2.stl" scale="0.001 0.001 0.001"/>

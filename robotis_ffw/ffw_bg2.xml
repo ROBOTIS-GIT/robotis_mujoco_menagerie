@@ -87,7 +87,7 @@
       <!-- Left arm -->
       <body name="arm_l_link1" pos="0 0.1045 0">
         <inertial pos="0.0162539 0.115097 0.000116015" quat="-0.229615 0.677745 0.212586 0.665391" mass="1.93395" diaginertia="0.00305502 0.0027509 0.00221577"/>
-        <joint name="arm_l_joint1" class="robot" pos="0 0 0" axis="0 1 0" range="-3.14 3.14"/>
+        <joint name="arm_l_joint1" class="robot" pos="0 0 0" axis="0 -1 0" range="-3.14 3.14"/>
         <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link1"/>
 
         <body name="arm_l_link2" pos="0 0.123 0">
@@ -156,7 +156,7 @@
       <!-- Right arm -->
       <body name="arm_r_link1" pos="0 -0.1045 0">
         <inertial pos="0.0162454 -0.115083 -0.000116015" quat="0.212043 0.665609 -0.229062 0.677889" mass="1.93395" diaginertia="0.00305635 0.00275332 0.00221466"/>
-        <joint name="arm_r_joint1" class="robot" pos="0 0 0" axis="0 1 0" range="-3.14 3.14"/>
+        <joint name="arm_r_joint1" class="robot" pos="0 0 0" axis="0 -1 0" range="-3.14 3.14"/>
         <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link1"/>
 
         <body name="arm_r_link2" pos="0 -0.123 0">

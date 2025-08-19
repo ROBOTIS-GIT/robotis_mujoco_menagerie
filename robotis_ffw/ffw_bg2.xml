@@ -265,7 +265,7 @@
       arm_r_joint7 -> range=-1.046 1.046
     -->
     <position name="actuator_arm_r_joint1" joint="arm_r_joint1" class="robot" ctrlrange="-3.14 3.14"/>
-    <position name="actuator_arm_r_joint2" joint="arm_r_joint2" class="robot" ctrlrange="0 3.14"/>
+    <position name="actuator_arm_r_joint2" joint="arm_r_joint2" class="robot" ctrlrange="-3.14 0"/>
     <position name="actuator_arm_r_joint3" joint="arm_r_joint3" class="robot" ctrlrange="-1.57 1.57"/>
     <position name="actuator_arm_r_joint4" joint="arm_r_joint4" class="robot" ctrlrange="-1.86 1.86"/>
     <position name="actuator_arm_r_joint5" joint="arm_r_joint5" class="robot" ctrlrange="-1.57 1.57"/>

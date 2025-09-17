@@ -58,25 +58,25 @@
                 <joint name="joint6" pos="0 0 0" axis="0 1 0" class="Y"/>
                 <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="link6"/>
                 <geom pos="0 -0.103 0" quat="1 0 0 0" type="mesh" rgba="0.2 0.2 0.2 1" mesh="flange"/>
-                <geom pos="0 -0.109 0" quat="0.500398 0.5 0.5 -0.499602" type="mesh" mesh="base"/>
+                <geom pos="0 -0.109 0" quat="0.500398 0.5 0.5 -0.499602" type="mesh" rgba="0.2 0.2 0.2 1" mesh="base"/>
                 <body name="rh_p12_rn_r1" pos="0.00803822 -0.156994 6.40105e-06" quat="0.500398 0.5 0.5 -0.499602">
                   <inertial pos="0 0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
                   <joint name="rh_r1" pos="0 0 0" axis="1 0 0" range="0 1.1" class="gripper"/>
-                  <geom type="mesh" mesh="r1"/>
+                  <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r1"/>
                   <body name="rh_p12_rn_r2" pos="0 0.0493634 0.0285">
                     <inertial pos="0 0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
                     <joint name="rh_r2" pos="0 0 0" axis="-1 0 0" range="0 1" class="gripper"/>
-                    <geom type="mesh" mesh="r2"/>
+                    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r2"/>
                   </body>
                 </body>
                 <body name="rh_p12_rn_l1" pos="-0.00796177 -0.157006 -6.34017e-06" quat="0.500398 0.5 0.5 -0.499602">
                   <inertial pos="0 -0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
                   <joint name="rh_l1" pos="0 0 0" axis="-1 0 0" range="0 1.1" class="gripper"/>
-                  <geom type="mesh" mesh="l1"/>
+                  <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l1"/>
                   <body name="rh_p12_rn_l2" pos="0 -0.0493634 0.0285">
                     <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
                     <joint name="rh_l2" pos="0 0 0" axis="1 0 0" range="0 1" class="gripper"/>
-                    <geom type="mesh" mesh="l2"/>
+                    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l2"/>
                   </body>
                 </body>
               </body>

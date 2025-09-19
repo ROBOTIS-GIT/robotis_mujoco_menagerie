@@ -1,5 +1,5 @@
 <mujoco model="open_manipulator_x scene">
-  <include file="omx.xml"/>
+  <include file="open_manipulator_x.xml"/>
 
   <statistic center="0.3 0 0.4" extent="1"/>
 

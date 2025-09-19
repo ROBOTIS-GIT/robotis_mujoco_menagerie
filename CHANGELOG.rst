@@ -1,6 +1,10 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0.2.1 (2025-09-19)
+------------------
+* Changed the gripper part of omy to black
+* Renamed robot identifier from omx to open_manipulator_x.
 
 0.2.0 (2025-06-02)
 ------------------

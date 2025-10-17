@@ -7,6 +7,9 @@ A collection of models for the MuJoCo physics engine from ROBOTIS
 ## OpenMANIPULATOR-Y
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_omy/omy.png" width="300">
 
+## OpenMANIPULATOR-Y
+<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_omx/omx.png" width="300">
+
 ## OpenMANIPULATOR-X
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_open_manipulator_x/open_manipulator_x.png" width="300">
 

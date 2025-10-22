@@ -1,6 +1,11 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0.3.0 (2025-10-17)
+------------------
+* Added Model files for OMX
+* Contributors: Pyo, Taehyeong Kim
+
 0.2.1 (2025-09-19)
 ------------------
 * Changed the gripper part of omy to black

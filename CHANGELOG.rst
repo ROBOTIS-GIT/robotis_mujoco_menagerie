@@ -1,6 +1,11 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0.4.0 (2025-12-12)
+------------------
+* Added Model files for FFW-SG2
+* Contributors: Pyo, Taehyeong Kim, jinw00-1
+
 0.3.0 (2025-10-17)
 ------------------
 * Added Model files for OMX

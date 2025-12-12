@@ -2,10 +2,10 @@
 A collection of models for the MuJoCo physics engine from ROBOTIS
 
 ## AI Worker (FFW-SG2)
-<img src="https://github.com/jinw00-1/robotis_mujoco_menagerie/raw/main/media/ffw_sg2.png" width="300">
+<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw_sg2.png" width="300">
 
 ## AI Worker (FFW-BG2)
-<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw.png" width="300">
+<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw_bg2.png" width="300">
 
 ## OpenMANIPULATOR-Y
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_omy/omy.png" width="300">

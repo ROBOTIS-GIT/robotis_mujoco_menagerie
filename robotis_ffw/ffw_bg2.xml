@@ -58,7 +58,10 @@
   </asset>
 
   <worldbody>
-    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy"/>
+    <!-- base_mobile_assy visual -->
+    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy" contype="0" conaffinity="0"/>
+    <!-- base_mobile_assy collision -->
+    <geom type="box" size="0.2 0.2 0.1" pos="0 0 0.2" rgba="0.2 0.2 0.2 0.3"/>
 
     <!-- arm_base_link with separate "slider" default class -->
     <body name="arm_base_link" pos="0.0055 0 1.4316">

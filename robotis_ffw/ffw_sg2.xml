@@ -65,7 +65,11 @@
     <body name="base_link" pos="0 0 0.15">
       <inertial pos="-0.0457 0.0066 0.1943" mass="35.99" diaginertia="0.017254 0.039837 0.028461"/>
       <freejoint name="floating_base"/>
-      <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy"/>
+
+      <!-- base_mobile_assy visual -->
+      <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy" contype="0" conaffinity="0"/>
+      <!-- base_mobile_assy collision -->
+      <geom type="box" size="0.2 0.2 0.12" pos="0 0 0.24" rgba="0 0 0 0"/>
 
       <!-- Left front wheel (steering + driving) -->
       <body name="left_wheel_steer" pos="0.1371 0.2554 0.27555">
@@ -106,7 +110,7 @@
 
       
       <body name="lift_link" pos="0 0 0">
-        <geom type="mesh" mesh="lift_link" rgba="0.7 0.7 0.7 1"/>
+        <geom type="mesh" mesh="lift_link" rgba="0.7 0.7 0.7 1" contype="0" conaffinity="0"/>
         <inertial pos="-0.12869878 -0.00001604 0.89456017" mass="17.9" diaginertia="10.095 10.270 0.197"/>
 
         <!-- arm_base_link with separate "slider" default class -->
@@ -294,9 +298,9 @@
     <position name="right_wheel_steer_act" joint="right_wheel_steer_joint" class="robot" ctrlrange="-1.58 1.58"/>
     <position name="rear_wheel_steer_act" joint="rear_wheel_steer_joint" class="robot" ctrlrange="-1.58 1.58"/>
     <!-- Drive actuators (velocity control) -->
-    <velocity name="left_wheel_drive_act" joint="left_wheel_drive_joint" ctrllimited="true" ctrlrange="-100 100" forcerange="-1000 1000"/>
-    <velocity name="right_wheel_drive_act" joint="right_wheel_drive_joint" ctrllimited="true" ctrlrange="-100 100" forcerange="-1000 1000"/>
-    <velocity name="rear_wheel_drive_act" joint="rear_wheel_drive_joint" ctrllimited="true" ctrlrange="-100 100" forcerange="-1000 1000"/>
+    <velocity name="left_wheel_drive_act" joint="left_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
+    <velocity name="right_wheel_drive_act" joint="right_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
+    <velocity name="rear_wheel_drive_act" joint="rear_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
     <!-- Slider: lift_joint -->
     <position name="actuator_lift_joint" joint="lift_joint" class="slider" ctrlrange="-0.5 0.0"/>
 

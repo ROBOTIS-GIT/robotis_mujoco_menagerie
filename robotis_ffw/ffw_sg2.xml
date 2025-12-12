@@ -321,7 +321,7 @@
     <!-- Left arm joints -->
     <position name="actuator_arm_l_joint1" joint="arm_l_joint1" class="robot" ctrlrange="-3.14 3.14"/>
     <position name="actuator_arm_l_joint2" joint="arm_l_joint2" class="robot" ctrlrange="0 3.14"/>
-    <position name="actuator_arm_l_joint3" joint="arm_l_joint3" class="robot" ctrlrange="-6.28 6.28"/>
+    <position name="actuator_arm_l_joint3" joint="arm_l_joint3" class="robot" ctrlrange="-3.14 3.14"/>
     <position name="actuator_arm_l_joint4" joint="arm_l_joint4" class="robot" ctrlrange="-1.86 1.86"/>
     <position name="actuator_arm_l_joint5" joint="arm_l_joint5" class="robot" ctrlrange="-1.57 1.57"/>
     <position name="actuator_arm_l_joint6" joint="arm_l_joint6" class="robot" ctrlrange="-1.57 1.57"/>

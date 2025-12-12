@@ -6,7 +6,7 @@ Changelog for robotis_mujoco_menagerie
 * Added Model files for FFW-SG2
 * Fixed joint limit bug in the FFW-BG2 arm model.
 * Replaced the FFW model base collision geometry with a simplified cube for more stable collision behavior.
-* Contributors: Pyo, Taehyeong Kim, jinw00-1, gahyun0425
+* Contributors: Taehyeong Kim, jinw00-1, gahyun0425
 
 0.3.0 (2025-10-17)
 ------------------

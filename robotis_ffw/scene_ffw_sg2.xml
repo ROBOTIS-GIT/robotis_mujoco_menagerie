@@ -1,4 +1,4 @@
-<mujoco model="ffw scene">
+<mujoco model="ffw_sg2 scene">
   <include file="ffw_sg2.xml"/>
 
   <statistic center="0.3 0 0.4" extent="1"/>

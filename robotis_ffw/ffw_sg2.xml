@@ -1,0 +1,340 @@
+<mujoco model="ffw_sg2">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+
+  <option integrator="implicitfast"/>
+
+  <!--
+    Default classes:
+    1) "robot" for main body joints
+    2) "gripper" for the gripper joints
+    3) "slider" specifically for the linear slide joint
+  -->
+  <default>
+    <!-- Robot default -->
+    <default class="robot">
+      <joint range="-3.14 3.14" armature="0.5" damping="100.0" />
+      <position kp="3000" forcerange="-1000 1000" ctrlrange="-3.14 3.14"/>
+    </default>
+
+    <!-- Hand (gripper) default -->
+    <default class="gripper">
+      <joint armature="0.1" damping="10.0"/>
+      <position kp="1000" forcerange="-100 100"/>
+    </default>
+
+    <!-- Slider default (for the lift_joint) -->
+    <default class="slider">
+      <joint type="slide" range="-0.5 0.0" armature="10.0" damping="5000.0" frictionloss="100.0" />
+      <position kp="10000" forcerange="-100000 100000" ctrlrange="-0.5 0.0"/>
+    </default>
+  </default>
+
+  <!-- Assets -->
+  <asset>
+    <mesh name="base_mobile_assy" file="ffw_sg2/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="left_wheel" file="ffw_sg2/left_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="right_wheel" file="ffw_sg2/right_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="rear_wheel" file="ffw_sg2/rear_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lift_link" file="ffw_sg2/lift_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="body_arm_assy" file="ffw_sg2/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link1" file="ffw_sg2/head_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link2" file="ffw_sg2/head_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link1" file="ffw_sg2/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link2" file="ffw_sg2/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link3" file="ffw_sg2/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link4" file="ffw_sg2/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link5" file="ffw_sg2/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link6" file="ffw_sg2/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link7" file="ffw_sg2/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link1" file="ffw_sg2/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link2" file="ffw_sg2/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link3" file="ffw_sg2/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link4" file="ffw_sg2/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link5" file="ffw_sg2/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link6" file="ffw_sg2/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link7" file="ffw_sg2/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="base" file="rh_p12_rn/base.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="r1" file="rh_p12_rn/r1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="r2" file="rh_p12_rn/r2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="l1" file="rh_p12_rn/l1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="l2" file="rh_p12_rn/l2.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+
+    <body name="base_link" pos="0 0 0.15">
+      <inertial pos="-0.0457 0.0066 0.1943" mass="35.99" diaginertia="0.017254 0.039837 0.028461"/>
+      <freejoint name="floating_base"/>
+
+      <!-- base_mobile_assy visual -->
+      <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy" contype="0" conaffinity="0"/>
+      <!-- base_mobile_assy collision -->
+      <geom type="box" size="0.2 0.2 0.12" pos="0 0 0.24" rgba="0 0 0 0"/>
+
+      <!-- Left front wheel (steering + driving) -->
+      <body name="left_wheel_steer" pos="0.1371 0.2554 0.27555">
+        <inertial pos="0 0 0" mass="0.05" diaginertia="0.01 0.01 0.01"/>
+        <joint name="left_wheel_steer_joint" class="robot" pos="0 0 0" axis="0 0 1" range="-1.58 1.58"/>
+        <body name="left_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 -0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="left_wheel_drive_joint" type="hinge" pos="0 0 0" axis="0 1 0" damping="2" frictionloss="0.2"/>
+          <geom type="mesh" mesh="left_wheel" size="0.07" friction="5.0 1.0 0.3"/>
+          <!-- Contact helper cylinder geom (collision only, invisible) -->
+          <geom type="cylinder" size="0.09 0.035" pos="0 0 0" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" rgba="0 0 0 0"/>
+        </body>
+      </body>
+
+      <!-- Right front wheel (steering + driving) -->
+      <body name="right_wheel_steer" pos="0.1371 -0.2554 0.27555">
+        <inertial pos="0 0 0" mass="0.05" diaginertia="0.01 0.01 0.01"/>
+        <joint name="right_wheel_steer_joint" class="robot" pos="0 0 0" axis="0 0 1" range="-1.58 1.58"/>
+        <body name="right_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="right_wheel_drive_joint" type="hinge" pos="0 0 0" axis="0 1 0" damping="2" frictionloss="0.2"/>
+          <geom type="mesh" mesh="right_wheel" size="0.07" friction="5.0 1.0 0.3"/>
+          <geom type="cylinder" size="0.09 0.035" pos="0 0 0" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" rgba="0 0 0 0"/>
+        </body>
+      </body>
+
+      <!-- Rear wheel (steering + driving) -->
+      <body name="rear_wheel_steer" pos="-0.2899 0 0.27555">
+        <inertial pos="0 0 0" mass="0.05" diaginertia="0.01 0.01 0.01"/>
+        <joint name="rear_wheel_steer_joint" class="robot" pos="0 0 0" axis="0 0 1" range="-1.58 1.58"/>
+        <body name="rear_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 -0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="rear_wheel_drive_joint" type="hinge" pos="0 0 0" axis="0 1 0"  damping="2" frictionloss="0.2"/>
+          <geom type="mesh" mesh="rear_wheel" size="0.07" friction="5.0 1.0 0.3"/>
+          <geom type="cylinder" size="0.09 0.035" pos="0 0 0" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" rgba="0 0 0 0"/>
+        </body>
+      </body>
+
+      
+      <body name="lift_link" pos="0 0 0">
+        <geom type="mesh" mesh="lift_link" rgba="0.7 0.7 0.7 1" contype="0" conaffinity="0"/>
+        <inertial pos="-0.12869878 -0.00001604 0.89456017" mass="17.9" diaginertia="10.095 10.270 0.197"/>
+
+        <!-- arm_base_link with separate "slider" default class -->
+        <body name="arm_base_link" pos="0.0055 0 1.4316">
+          <!-- Joint with slider class -->
+          
+          <inertial pos="-0.0460732 -2.28101e-05 -0.0270208" quat="0.295276 0.295528 -0.642514 0.642379" mass="8.72176" diaginertia="0.106112 0.0836519 0.0576143"/>
+          <joint name="lift_joint" class="slider" pos="0 0 0" axis="0 0 1" type="slide"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="body_arm_assy"/>
+
+          <!-- Head -->
+          <body name="head_link1" pos="0.0494878 0 0.102123">
+            <inertial pos="-0.00732988 0 0.0434363" quat="0.688381 -0.161651 -0.161651 0.688381" mass="0.139473" diaginertia="6.54445e-05 5.99779e-05 4.75755e-05"/>
+            <joint name="head_joint1" class="robot" pos="0 0 0" axis="0 1 0" range="-0.2317 0.6951"/>
+            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="head_link1"/>
+
+            <body name="head_link2" pos="0.0365694 0 0.0563797">
+              <inertial pos="0.00877907 -8.40392e-05 0.0425432" quat="0.653422 0.653616 0.269949 -0.270098" mass="0.145078" diaginertia="0.000186994 0.000179978 2.28387e-05"/>
+              <joint name="head_joint2" class="robot" pos="0 0 0" axis="0 0 1" range="-0.35 0.35"/>
+              <geom type="mesh" rgba="1 1 1 1" mesh="head_link2"/>
+            </body>
+          </body>
+
+          <!-- Left arm -->
+          <body name="arm_l_link1" pos="0 0.1045 0">
+            <inertial pos="0.0162539 0.115097 0.000116015" quat="-0.229615 0.677745 0.212586 0.665391" mass="1.93395" diaginertia="0.00305502 0.0027509 0.00221577"/>
+            <joint name="arm_l_joint1" class="robot" pos="0 0 0" axis="0 1 0" range="-3.14 3.14"/>
+            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link1"/>
+
+            <body name="arm_l_link2" pos="0 0.123 0">
+              <inertial pos="0.00909681 -0.000105504 -0.144033" quat="0.692968 0.108459 0.106285 0.704795" mass="2.12414" diaginertia="0.0108537 0.0106882 0.00241736"/>
+              <joint name="arm_l_joint2" class="robot" pos="0 0 0" axis="1 0 0" range="0 3.14"/>
+              <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link2"/>
+
+              <body name="arm_l_link3" pos="0 0 -0.165">
+                <inertial pos="2.51092e-05 0.0179472 -0.108757" quat="0.894344 0.447371 -0.000598238 0.00281074" mass="1.40774" diaginertia="0.00193356 0.00173187 0.00129028"/>
+                <joint name="arm_l_joint3" class="robot" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link3"/>
+
+                <body name="arm_l_link4" pos="0.041004 0 -0.135">
+                  <inertial pos="-4.39703e-05 0.00978704 -0.137888" quat="0.984403 -0.175803 -0.00125587 -0.00649472" mass="1.51314" diaginertia="0.00636289 0.00628017 0.00133396"/>
+                  <joint name="arm_l_joint4" class="robot" pos="0 0 0" axis="0 1 0" range="-2.9361 1.0786"/>
+                  <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link4"/>
+
+                  <body name="arm_l_link5" pos="-0.041004 0 -0.1489">
+                    <inertial pos="-4.95306e-05 0.0187957 -0.0983639" quat="0.838675 0.544584 0.00138926 -0.00713051" mass="1.34419" diaginertia="0.00169917 0.00156903 0.00116769"/>
+                    <joint name="arm_l_joint5" class="robot" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link5"/>
+
+                    <body name="arm_l_link6" pos="0 0 -0.1041">
+                      <inertial pos="0.00038449 0.0194298 -0.0639456" quat="0.658925 -0.254422 0.24959 0.662414" mass="0.636234" diaginertia="0.00155561 0.00138897 0.00049676"/>
+                      <joint name="arm_l_joint6" class="robot" pos="0 0 0" axis="0 1 0" range="-1.57 1.57"/>
+                      <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link6"/>
+
+                      <body name="arm_l_link7" pos="0 0 -0.0885">
+                        <inertial pos="-0.00237181 0.00249345 -0.0980007" quat="0.707876 -0.0176581 -0.0477307 0.704501" mass="0.384359" diaginertia="0.00141022 0.00125626 0.000287964"/>
+                        <joint name="arm_l_joint7" class="robot" pos="0 0 0" axis="1 0 0" range="-1.8201 1.5804"/>
+                        <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_l_link7"/>
+                        <geom size="0.0115 0.021 0.021" pos="0.107944 0 -0.065588" quat="0.475435 -0.475435 0.523413 0.523413" type="box"/>
+
+                        <!-- Left hand base -->
+                        <geom pos="0 0 -0.078" quat="0 0 1 0" type="mesh" rgba="0.2 0.2 0.2 1" mesh="base"/>
+
+                        <!-- Left hand gripper -->
+                        <body name="gripper_l_rh_p12_rn_r1" pos="0 0.008 -0.126" quat="0 0 1 0">
+                          <inertial pos="0 0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
+                          <joint name="gripper_l_joint1" class="gripper" pos="0 0 0" axis="1 0 0" range="0 1.1"/>
+                          <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r1"/>
+                          <body name="gripper_l_rh_p12_rn_r2" pos="0 0.0493634 0.0285">
+                            <inertial pos="0 0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
+                            <joint name="gripper_l_joint2" class="gripper" pos="0 0 0" axis="-1 0 0" range="0 1"/>
+                            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r2"/>
+                          </body>
+                        </body>
+                        <body name="gripper_l_rh_p12_rn_l1" pos="0 -0.008 -0.126" quat="0 0 1 0">
+                          <inertial pos="0 -0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
+                          <joint name="gripper_l_joint3" class="gripper" pos="0 0 0" axis="-1 0 0" range="0 1.1"/>
+                          <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l1"/>
+                          <body name="gripper_l_rh_p12_rn_l2" pos="0 -0.0493634 0.0285">
+                            <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
+                            <joint name="gripper_l_joint4" class="gripper" pos="0 0 0" axis="1 0 0" range="0 1"/>
+                            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l2"/>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+
+          <!-- Right arm -->
+          <body name="arm_r_link1" pos="0 -0.1045 0">
+            <inertial pos="0.0162454 -0.115083 -0.000116015" quat="0.212043 0.665609 -0.229062 0.677889" mass="1.93395" diaginertia="0.00305635 0.00275332 0.00221466"/>
+            <joint name="arm_r_joint1" class="robot" pos="0 0 0" axis="0 1 0" range="-3.14 3.14"/>
+            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link1"/>
+
+            <body name="arm_r_link2" pos="0 -0.123 0">
+              <inertial pos="0.00904096 0.000105802 -0.144033" quat="0.707129 0.105833 0.108702 0.690617" mass="2.12414" diaginertia="0.0108559 0.0106863 0.00242145"/>
+              <joint name="arm_r_joint2" class="robot" pos="0 0 0" axis="1 0 0" range="-3.14 0"/>
+              <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link2"/>
+
+              <body name="arm_r_link3" pos="0 0 -0.165">
+                <inertial pos="-2.51092e-05 -0.0179472 -0.108765" quat="0.447823 0.894113 0.00400928 -0.000680335" mass="1.40774" diaginertia="0.00193273 0.0017314 0.00128994"/>
+                <joint name="arm_r_joint3" class="robot" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link3"/>
+
+                <body name="arm_r_link4" pos="0.041004 0 -0.135">
+                  <inertial pos="4.39703e-05 -0.00978736 -0.137888" quat="0.984402 0.175809 0.00125565 -0.00649329" mass="1.51314" diaginertia="0.00636295 0.00628021 0.00133398"/>
+                  <joint name="arm_r_joint4" class="robot" pos="0 0 0" axis="0 1 0" range="-2.9361 1.0786"/>
+                  <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link4"/>
+                
+                  <body name="arm_r_link5" pos="-0.041004 0 -0.1489">
+                    <inertial pos="-2.62962e-05 -0.0187957 -0.0983871" quat="0.546043 0.837751 0.00318354 -0.000761107" mass="1.34419" diaginertia="0.00169762 0.00156986 0.00116911"/>
+                    <joint name="arm_r_joint5" class="robot" pos="0 0 0" axis="0 0 1" range="-3.14 3.14"/>
+                    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link5"/> 
+
+                    <body name="arm_r_link6" pos="0 0 -0.1041">
+                      <inertial pos="0.000339839 -0.0194304 -0.0639459" quat="0.662489 0.249825 -0.2542 0.658846" mass="0.636234" diaginertia="0.00155564 0.00138901 0.000496769"/>
+                      <joint name="arm_r_joint6" class="robot" pos="0 0 0" axis="0 1 0" range="-1.57 1.57"/>
+                      <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link6"/>
+
+                      <body name="arm_r_link7" pos="0 0 -0.0885">
+                        <inertial pos="-0.00242011 -0.00201564 -0.0911446" quat="0.703942 -0.0528198 -0.0236914 0.707894" mass="0.384359" diaginertia="0.00125471 0.0011001 0.000310982"/>
+                        <joint name="arm_r_joint7" class="robot" pos="0 0 0" axis="1 0 0" range="-1.5804 1.8201"/>
+                        <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="arm_r_link7"/>
+                        <geom size="0.0115 0.021 0.021" pos="0.107944 0 -0.065588" quat="0.475435 -0.475435 0.523413 0.523413" type="box"/>
+
+                        <!-- Right hand base -->
+                        <geom pos="0 0 -0.078" quat="0 0 1 0" type="mesh" rgba="0.2 0.2 0.2 1" mesh="base"/>
+                        <!-- Right hand gripper -->
+                        <body name="gripper_r_rh_p12_rn_r1" pos="0 0.008 -0.126" quat="0 0 1 0">
+                          <inertial pos="0 0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
+                          <joint name="gripper_r_joint1" class="gripper" pos="0 0 0" axis="1 0 0" range="0 1.1"/>
+                          <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r1"/>
+                          <body name="gripper_r_rh_p12_rn_r2" pos="0 0.0493634 0.0285">
+                            <inertial pos="0 0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
+                            <joint name="gripper_r_joint2" class="gripper" pos="0 0 0" axis="-1 0 0" range="0 1"/>
+                            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="r2"/>
+                          </body>
+                        </body>
+                        <body name="gripper_r_rh_p12_rn_l1" pos="0 -0.008 -0.126" quat="0 0 1 0">
+                          <inertial pos="0 -0.034 0.004" mass="0.068" diaginertia="1e-06 1e-06 1e-06"/>
+                          <joint name="gripper_r_joint3" class="gripper" pos="0 0 0" axis="-1 0 0" range="0 1.1"/>
+                          <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l1"/>
+                          <body name="gripper_r_rh_p12_rn_l2" pos="0 -0.0493634 0.0285">
+                            <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
+                            <joint name="gripper_r_joint4" class="gripper" pos="0 0 0" axis="1 0 0" range="0 1"/>
+                            <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="l2"/>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>  
+        </body>
+      </body>
+    </body>  
+  </worldbody>
+
+  <!-- Exclude contact information -->
+  <contact>
+    <exclude body1="world" body2="arm_base_link"/>
+    <exclude body1="world" body2="head_link1"/>
+    <exclude body1="world" body2="head_link2"/>
+    <exclude body1="world" body2="arm_l_link4"/>
+    <exclude body1="world" body2="arm_l_link5"/>
+    <exclude body1="world" body2="arm_l_link6"/>
+    <exclude body1="world" body2="arm_l_link7"/>
+    <exclude body1="world" body2="arm_r_link4"/>
+    <exclude body1="world" body2="arm_r_link5"/>
+    <exclude body1="world" body2="arm_r_link6"/>
+    <exclude body1="world" body2="arm_r_link7"/>
+  </contact>
+
+  <!-- Actuators (position type for each joint) -->
+  <actuator>
+    <!-- mobile base actuators -->
+    <!-- Steering actuators (position control) -->
+    <position name="left_wheel_steer_act" joint="left_wheel_steer_joint" class="robot" ctrlrange="-1.58 1.58"/>
+    <position name="right_wheel_steer_act" joint="right_wheel_steer_joint" class="robot" ctrlrange="-1.58 1.58"/>
+    <position name="rear_wheel_steer_act" joint="rear_wheel_steer_joint" class="robot" ctrlrange="-1.58 1.58"/>
+    <!-- Drive actuators (velocity control) -->
+    <velocity name="left_wheel_drive_act" joint="left_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
+    <velocity name="right_wheel_drive_act" joint="right_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
+    <velocity name="rear_wheel_drive_act" joint="rear_wheel_drive_joint" ctrllimited="true" ctrlrange="-50 50"/>
+    <!-- Slider: lift_joint -->
+    <position name="actuator_lift_joint" joint="lift_joint" class="slider" ctrlrange="-0.5 0.0"/>
+
+    <!-- Head joints -->
+    <position name="actuator_head_joint1" joint="head_joint1" class="robot" ctrlrange="-0.2317 0.6951"/>
+    <position name="actuator_head_joint2" joint="head_joint2" class="robot" ctrlrange="-0.35 0.35"/>
+
+    <!-- Right arm joints -->
+    <position name="actuator_arm_r_joint1" joint="arm_r_joint1" class="robot" ctrlrange="-3.14 3.14"/>
+    <position name="actuator_arm_r_joint2" joint="arm_r_joint2" class="robot" ctrlrange="-3.14 0"/>
+    <position name="actuator_arm_r_joint3" joint="arm_r_joint3" class="robot" ctrlrange="-1.57 1.57"/>
+    <position name="actuator_arm_r_joint4" joint="arm_r_joint4" class="robot" ctrlrange="-1.86 1.86"/>
+    <position name="actuator_arm_r_joint5" joint="arm_r_joint5" class="robot" ctrlrange="-1.57 1.57"/>
+    <position name="actuator_arm_r_joint6" joint="arm_r_joint6" class="robot" ctrlrange="-1.57 1.57"/>
+    <position name="actuator_arm_r_joint7" joint="arm_r_joint7" class="robot" ctrlrange="-1.046 1.046"/>
+
+    <position name="actuator_gripper_r_joint1" joint="gripper_r_joint1" ctrlrange="0.000 1.100" class="gripper"/>
+    <position name="actuator_gripper_r_joint2" joint="gripper_r_joint2" ctrlrange="0.000 1.000" class="gripper"/>
+    <position name="actuator_gripper_r_joint3" joint="gripper_r_joint3" ctrlrange="0.000 1.100" class="gripper"/>
+    <position name="actuator_gripper_r_joint4" joint="gripper_r_joint4" ctrlrange="0.000 1.000" class="gripper"/>
+
+    <!-- Left arm joints -->
+    <position name="actuator_arm_l_joint1" joint="arm_l_joint1" class="robot" ctrlrange="-3.14 3.14"/>
+    <position name="actuator_arm_l_joint2" joint="arm_l_joint2" class="robot" ctrlrange="0 3.14"/>
+    <position name="actuator_arm_l_joint3" joint="arm_l_joint3" class="robot" ctrlrange="-3.14 3.14"/>
+    <position name="actuator_arm_l_joint4" joint="arm_l_joint4" class="robot" ctrlrange="-1.86 1.86"/>
+    <position name="actuator_arm_l_joint5" joint="arm_l_joint5" class="robot" ctrlrange="-1.57 1.57"/>
+    <position name="actuator_arm_l_joint6" joint="arm_l_joint6" class="robot" ctrlrange="-1.57 1.57"/>
+    <position name="actuator_arm_l_joint7" joint="arm_l_joint7" class="robot" ctrlrange="-1.046 1.046"/>
+
+    <position name="actuator_gripper_l_joint1" joint="gripper_l_joint1" ctrlrange="0.000 1.100" class="gripper"/>
+    <position name="actuator_gripper_l_joint2" joint="gripper_l_joint2" ctrlrange="0.000 1.000" class="gripper"/>
+    <position name="actuator_gripper_l_joint3" joint="gripper_l_joint3" ctrlrange="0.000 1.100" class="gripper"/>
+    <position name="actuator_gripper_l_joint4" joint="gripper_l_joint4" ctrlrange="0.000 1.000" class="gripper"/>
+
+  </actuator>
+</mujoco>

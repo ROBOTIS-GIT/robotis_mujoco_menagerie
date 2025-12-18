@@ -25,12 +25,8 @@
 
     <!-- Slider default (for the lift_joint) -->
     <default class="slider">
-      <!--
-        You can tune armature/damping further for the slide if necessary.
-        'range' below sets the permissible linear travel.
-      -->
-      <joint type="slide" range="0 0.25" armature="10.0" damping="1000.0" frictionloss="100.0" />
-      <position kp="10000" forcerange="-50000 50000" ctrlrange="0 0.25"/>
+      <joint type="slide" range="-0.5 0.0" armature="10.0" damping="5000.0" frictionloss="100.0" />
+      <position kp="10000" forcerange="-100000 100000" ctrlrange="-0.5 0.0"/>
     </default>
   </default>
 
@@ -62,7 +58,10 @@
   </asset>
 
   <worldbody>
-    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy"/>
+    <!-- base_mobile_assy visual -->
+    <geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="base_mobile_assy" contype="0" conaffinity="0"/>
+    <!-- base_mobile_assy collision -->
+    <geom type="box" size="0.2 0.2 0.1" pos="0 0 0.2" rgba="0.2 0.2 0.2 0.3"/>
 
     <!-- arm_base_link with separate "slider" default class -->
     <body name="arm_base_link" pos="0.0055 0 1.4316">
@@ -242,9 +241,9 @@
   <actuator>
     <!--
       Slider: lift_joint
-      range = 0 0.25
+      range = -0.5 0.0
     -->
-    <position name="actuator_lift_joint" joint="lift_joint" class="slider" ctrlrange="0 0.25"/>
+    <position name="actuator_lift_joint" joint="lift_joint" class="slider" ctrlrange="-0.5 0.0"/>
 
     <!--
       Head joints:
@@ -257,7 +256,7 @@
     <!--
       Right arm joints:
       arm_r_joint1 -> range=-3.14 3.14
-      arm_r_joint2 -> range=0 3.14
+      arm_r_joint2 -> range=-3.14 0
       arm_r_joint3 -> range=-1.57 1.57
       arm_r_joint4 -> range=-1.86 1.86
       arm_r_joint5 -> range=-1.57 1.57
@@ -265,7 +264,7 @@
       arm_r_joint7 -> range=-1.046 1.046
     -->
     <position name="actuator_arm_r_joint1" joint="arm_r_joint1" class="robot" ctrlrange="-3.14 3.14"/>
-    <position name="actuator_arm_r_joint2" joint="arm_r_joint2" class="robot" ctrlrange="0 3.14"/>
+    <position name="actuator_arm_r_joint2" joint="arm_r_joint2" class="robot" ctrlrange="-3.14 0"/>
     <position name="actuator_arm_r_joint3" joint="arm_r_joint3" class="robot" ctrlrange="-1.57 1.57"/>
     <position name="actuator_arm_r_joint4" joint="arm_r_joint4" class="robot" ctrlrange="-1.86 1.86"/>
     <position name="actuator_arm_r_joint5" joint="arm_r_joint5" class="robot" ctrlrange="-1.57 1.57"/>

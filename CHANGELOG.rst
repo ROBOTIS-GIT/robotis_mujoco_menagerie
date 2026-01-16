@@ -1,6 +1,14 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.0.0 (2026-01-16)
+------------------
+* Tuned simulation parameters for all robot models (FFW-BG2, FFW-SG2, OMY, OMX, TurtleBot3)
+* Fixed gripper mimic joint configuration to match OMY gripper behavior
+* Corrected body inertial values for realistic physics simulation
+* Updated material colors to black for consistent appearance
+* Contributors: Taehyeong Kim
+
 0.4.0 (2025-12-12)
 ------------------
 * Added Model files for FFW-SG2

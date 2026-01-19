@@ -129,7 +129,7 @@
                     <geom mesh="l1" class="collision"/>
                     <body name="rh_l2" pos="0 -0.0493634 0.0285">
                       <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
-                      <joint name="rh_l2" class="Gripper"/>
+                      <joint name="rh_l2" class="Gripper_mimic"/>
                       <geom mesh="l2" class="visual"/>
                       <geom mesh="l2" class="collision"/>
                     </body>

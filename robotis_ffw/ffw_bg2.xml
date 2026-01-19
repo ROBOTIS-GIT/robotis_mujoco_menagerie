@@ -224,7 +224,7 @@
                       <geom type="mesh" mesh="gripper_l1" class="collision"/>
                       <body name="gripper_l_l2" pos="0 -0.0493634 0.0285">
                         <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
-                        <joint name="gripper_l_joint4" class="gripper_joint"/>
+                        <joint name="gripper_l_joint4" class="gripper_mimic"/>
                         <geom type="mesh" mesh="gripper_l2" material="black" class="visual"/>
                         <geom type="mesh" mesh="gripper_l2" class="collision"/>
                       </body>

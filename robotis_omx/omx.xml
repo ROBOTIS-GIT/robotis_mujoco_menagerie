@@ -1,35 +1,11 @@
 <mujoco model="omx">
-  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <compiler angle="radian" meshdir="assets/"/>
 
-  <option integrator="implicitfast"/>
+  <option cone="elliptic" impratio="10"/>
 
-  <!-- Default -->
-  <default>
-    <!-- General joint settings -->
-    <default class="dxl">
-      <joint range="-6.28319 6.28319" armature="0.1" damping="100.0"/>
-      <position kp="5000" forcerange="-2000 2000" ctrlrange="-6.28319 6.28319"/>
-    </default>
-    <!-- Gripper joint settings -->
-    <default class="gripper">
-      <joint armature="0.1" damping="10.0"/>
-      <position kp="1000" forcerange="-100 100" ctrlrange="-0.2 1.0"/>
-    </default>
-    <!-- Visualization / Non-collision geometry -->
-    <default class="visual">
-      <geom material="grey" contype="0" conaffinity="0" group="2" />
-    </default>
-    <!-- Collision geometry -->
-    <default class="collision">
-      <geom material="collision_material" condim="3" contype="1" conaffinity="1" priority="1" group="1" 
-            solref="0.005 1" solimp="0.99 0.999 1e-05" friction="1 0.01 0.01" />
-    </default>
-  </default>
-
-  <!-- Asset -->
   <asset>
-    <material name="grey" rgba="0.2 0.2 0.2 1" />
-    <material name="collision_material" rgba="0.2 0.2 0.2 1" />
+    <material name="black" rgba="0.1 0.1 0.1 1"/>
+
     <mesh name="follower_01_base" file="follower_01_base.stl" scale="0.001 0.001 0.001"/>
     <mesh name="follower_02_base_tilt_Revised" file="follower_02_base_tilt_Revised.stl" scale="0.001 0.001 0.001"/>
     <mesh name="follower_03_middle_verticle" file="follower_03_middle_verticle.stl" scale="0.001 0.001 0.001"/>
@@ -40,57 +16,88 @@
     <mesh name="follower_08_gripper_gear" file="follower_08_gripper_gear.stl" scale="0.001 0.001 0.001"/>
   </asset>
 
-  <!-- World -->
+  <default>
+    <default class="omx">
+      <joint frictionloss="0.1" armature="0.1"/>
+      <!-- XL330-M288-T: stall torque 0.52 N.m -->
+      <position kp="50" dampratio="1" forcerange="-3.5 3.5"/>
+      <!-- Joint 1: -270 ~ +360 deg -->
+      <default class="Joint1">
+        <joint axis="0 0 1" range="-4.712389 6.283185"/>
+      </default>
+      <!-- Joint 2, 3: -120 ~ +90 deg -->
+      <default class="Joint2">
+        <joint axis="0 1 0" range="-2.094395 1.570796"/>
+      </default>
+      <default class="Joint3">
+        <joint axis="0 1 0" range="-2.094395 1.570796"/>
+      </default>
+      <!-- Joint 4: -100 ~ +100 deg -->
+      <default class="Joint4">
+        <joint axis="0 1 0" range="-1.745329 1.745329"/>
+      </default>
+      <!-- Joint 5: +/-270 deg -->
+      <default class="Joint5">
+        <joint axis="1 0 0" range="-4.712389 4.712389"/>
+      </default>
+      <!-- Gripper: 0 ~ +100 deg -->
+      <default class="Gripper">
+        <joint axis="0 0 1" range="0 1.745329"/>
+      </default>
+      <!-- Gripper mimic: -100 ~ 0 deg (opposite direction) -->
+      <default class="Gripper_mimic">
+        <joint axis="0 0 1" range="-1.745329 0"/>
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" density="0" group="2" material="black"/>
+      </default>
+      <default class="collision">
+        <geom group="3" type="mesh" material="black"/>
+      </default>
+    </default>
+  </default>
+
   <worldbody>
-    <body name="base" pos="0 0 0" quat="1 0 0 0">
-      <body name="link0" pos="0 0 0" quat="1 0 0 0">
-        <inertial pos="-1.441250800e-02 -3.149887900e-03 1.927659900e-02" quat="1.0 0.0 0.0 0.0" mass="2.238905100e-01" diaginertia="0.00035680461 0.00021941932 0.00045575899" />
-        <geom name="link0_collision" type="mesh" mesh="follower_01_base" class="collision"/>
-        <geom name="link0_visual" type="mesh" mesh="follower_01_base" class="visual"/>
-        <body name="link1" pos="-0.01125 0 0.034">
-          <joint name="joint1" type="hinge" axis="0 0 1" class="dxl"/>
-          <inertial pos="-6.223620500e-06 6.049232000e-04 4.741880300e-02" quat="1.0 0.0 0.0 0.0" mass="6.598704100e-02" diaginertia="2.1731667e-05 2.1351513e-05 1.1657955e-05" />
-          <geom name="link1_collision" type="mesh" mesh="follower_02_base_tilt_Revised" class="collision"/>
-          <geom name="link1_visual" type="mesh" mesh="follower_02_base_tilt_Revised" class="visual"/>
-
-          <body name="link2" pos="0 0 0.0635">
-            <joint name="joint2" type="hinge" axis="0 1 0" class="dxl"/>
-            <inertial pos="1.808991600e-02 2.977875800e-04 9.900545200e-02" quat="1.0 0.0 0.0 0.0" mass="8.722147100e-02" diaginertia="0.00010307915 0.00012086327 4.1993677e-05" />
-            <geom name="link2_collision" type="mesh" mesh="follower_03_middle_verticle" class="collision"/>
-            <geom name="link2_visual" type="mesh" mesh="follower_03_middle_verticle" class="visual"/>
-
-            <body name="link3" pos="0.0415 0 0.11315">
-              <joint name="joint3" type="hinge" axis="0 1 0" class="dxl"/>
-              <inertial pos="8.739860200e-02 4.131006500e-04 -3.582921000e-03" quat="1.0 0.0 0.0 0.0" mass="8.375912900e-02" diaginertia="1.5203101e-05 0.00022606158 0.00023066887" />
-              <geom name="link3_collision" type="mesh" mesh="follower_04_middle_horizontal" class="collision"/>
-              <geom name="link3_visual" type="mesh" mesh="follower_04_middle_horizontal" class="visual"/>
-
-              <body name="link4" pos="0.162 0 0">
-                <joint name="joint4" type="hinge" axis="0 1 0" class="dxl"/>
-                <inertial pos="2.323498000e-02 6.773537800e-05 5.976131200e-03" quat="1.0 0.0 0.0 0.0" mass="2.997506300e-02" diaginertia="5.099513e-06 7.0990471e-06 6.3119495e-06" />
-                <geom name="link4_collision" type="mesh" mesh="follower_05_tip" class="collision"/>
-                <geom name="link4_visual" type="mesh" mesh="follower_05_tip" class="visual"/>
-
-                <body name="link5" pos="0.0287 0 0">
-                  <joint name="joint5" type="hinge" axis="1 0 0" class="dxl"/>
-                  <inertial pos="2.807240700e-02 2.413594100e-05 1.352891400e-02" quat="1.0 0.0 0.0 0.0" mass="4.381088700e-02" diaginertia="2.3694459e-05 2.3236924e-05 7.1806291e-06" />
-                  <geom name="link5_collision" type="mesh" mesh="follower_06_pan_Revised" class="collision"/>
-                  <geom name="link5_visual" type="mesh" mesh="follower_06_pan_Revised" class="visual"/>
-
-                  <!-- Gripper -->
-                  <body name="link6" pos="0.0295 0.0075 0">
-                    <joint name="gripper_joint_1" type="hinge" axis="0 0 1" class="gripper"/>
-                    <inertial pos="1.616456500e-02 1.273103200e-03 2.729159800e-04" quat="1.0 0.0 0.0 0.0" mass="1.209067700e-02" diaginertia="2.7083287e-06 6.8733728e-06 4.6941881e-06" />
-                    <geom name="link6_collision" type="mesh" mesh="follower_07_gripper_motorized" class="collision"/>
-                    <geom name="link6_visual" type="mesh" mesh="follower_07_gripper_motorized" class="visual"/>
-                  </body>
-
-                  <body name="link7" pos="0.0295 -0.0108 0">
-                    <joint name="gripper_joint_2" type="hinge" axis="0 0 1" class="gripper"/>
-                    <inertial pos="1.616456500e-02 1.273103200e-03 2.729159800e-04" quat="1.0 0.0 0.0 0.0" mass="1.209067700e-02" diaginertia="2.7083287e-06 6.8733728e-06 4.6941881e-06" />
-                    <geom name="link7_collision" type="mesh" mesh="follower_08_gripper_gear" class="collision"/>
-                    <geom name="link7_visual" type="mesh" mesh="follower_08_gripper_gear" class="visual"/>
-                  </body>
+    <body name="link0" childclass="omx">
+      <inertial pos="-1.441250800e-02 -3.149887900e-03 1.927659900e-02" quat="1.0 0.0 0.0 0.0" mass="2.238905100e-01" diaginertia="0.00035680461 0.00021941932 0.00045575899"/>
+      <geom mesh="follower_01_base" class="visual"/>
+      <geom mesh="follower_01_base" class="collision"/>
+      <body name="link1" pos="-0.01125 0 0.034">
+        <inertial pos="-6.223620500e-06 6.049232000e-04 4.741880300e-02" quat="1.0 0.0 0.0 0.0" mass="6.598704100e-02" diaginertia="2.1731667e-05 2.1351513e-05 1.1657955e-05"/>
+        <joint name="Joint1" class="Joint1"/>
+        <geom mesh="follower_02_base_tilt_Revised" class="visual"/>
+        <geom mesh="follower_02_base_tilt_Revised" class="collision"/>
+        <body name="link2" pos="0 0 0.0635">
+          <inertial pos="1.808991600e-02 2.977875800e-04 9.900545200e-02" quat="1.0 0.0 0.0 0.0" mass="8.722147100e-02" diaginertia="0.00010307915 0.00012086327 4.1993677e-05"/>
+          <joint name="Joint2" class="Joint2"/>
+          <geom mesh="follower_03_middle_verticle" class="visual"/>
+          <geom mesh="follower_03_middle_verticle" class="collision"/>
+          <body name="link3" pos="0.0415 0 0.11315">
+            <inertial pos="8.739860200e-02 4.131006500e-04 -3.582921000e-03" quat="1.0 0.0 0.0 0.0" mass="8.375912900e-02" diaginertia="1.5203101e-05 0.00022606158 0.00023066887"/>
+            <joint name="Joint3" class="Joint3"/>
+            <geom mesh="follower_04_middle_horizontal" class="visual"/>
+            <geom mesh="follower_04_middle_horizontal" class="collision"/>
+            <body name="link4" pos="0.162 0 0">
+              <inertial pos="2.323498000e-02 6.773537800e-05 5.976131200e-03" quat="1.0 0.0 0.0 0.0" mass="2.997506300e-02" diaginertia="5.099513e-06 7.0990471e-06 6.3119495e-06"/>
+              <joint name="Joint4" class="Joint4"/>
+              <geom mesh="follower_05_tip" class="visual"/>
+              <geom mesh="follower_05_tip" class="collision"/>
+              <body name="link5" pos="0.0287 0 0">
+                <inertial pos="2.807240700e-02 2.413594100e-05 1.352891400e-02" quat="1.0 0.0 0.0 0.0" mass="4.381088700e-02" diaginertia="2.3694459e-05 2.3236924e-05 7.1806291e-06"/>
+                <joint name="Joint5" class="Joint5"/>
+                <geom mesh="follower_06_pan_Revised" class="visual"/>
+                <geom mesh="follower_06_pan_Revised" class="collision"/>
+                <body name="link6" pos="0.0295 0.0075 0">
+                  <inertial pos="1.616456500e-02 1.273103200e-03 2.729159800e-04" quat="1.0 0.0 0.0 0.0" mass="1.209067700e-02" diaginertia="2.7083287e-06 6.8733728e-06 4.6941881e-06"/>
+                  <joint name="Gripper" class="Gripper"/>
+                  <geom mesh="follower_07_gripper_motorized" class="visual"/>
+                  <geom mesh="follower_07_gripper_motorized" class="collision"/>
+                </body>
+                <body name="link7" pos="0.0295 -0.0108 0">
+                  <inertial pos="1.616456500e-02 1.273103200e-03 2.729159800e-04" quat="1.0 0.0 0.0 0.0" mass="1.209067700e-02" diaginertia="2.7083287e-06 6.8733728e-06 4.6941881e-06"/>
+                  <joint name="Gripper_mimic" class="Gripper_mimic"/>
+                  <geom mesh="follower_08_gripper_gear" class="visual"/>
+                  <geom mesh="follower_08_gripper_gear" class="collision"/>
                 </body>
               </body>
             </body>
@@ -100,24 +107,27 @@
     </body>
   </worldbody>
 
-  <!-- Disable collision between specific links -->
+  <actuator>
+    <position class="Joint1" name="Joint1" joint="Joint1" inheritrange="1"/>
+    <position class="Joint2" name="Joint2" joint="Joint2" inheritrange="1"/>
+    <position class="Joint3" name="Joint3" joint="Joint3" inheritrange="1"/>
+    <position class="Joint4" name="Joint4" joint="Joint4" inheritrange="1"/>
+    <position class="Joint5" name="Joint5" joint="Joint5" inheritrange="1"/>
+    <position class="Gripper" name="Gripper" joint="Gripper" inheritrange="1"/>
+  </actuator>
+
   <contact>
     <exclude body1="link0" body2="link1"/>
+    <exclude body1="link5" body2="link6"/>
+    <exclude body1="link5" body2="link7"/>
+    <exclude body1="link6" body2="link7"/>
   </contact>
 
   <equality>
-    <joint joint1="gripper_joint_1" joint2="gripper_joint_2" polycoef="0 -1 0 0 0"/>
+    <joint joint1="Gripper" joint2="Gripper_mimic" polycoef="0 -1 0 0 0"/>
   </equality>
 
-  <!-- Actuator -->
-  <actuator>
-    <position name="joint1_ctrl" joint="joint1" class="dxl"/>
-    <position name="joint2_ctrl" joint="joint2" class="dxl"/>
-    <position name="joint3_ctrl" joint="joint3" class="dxl"/>
-    <position name="joint4_ctrl" joint="joint4" class="dxl"/>
-    <position name="joint5_ctrl" joint="joint5" class="dxl"/>
-
-    <position name="gripper_joint_1_ctrl" joint="gripper_joint_1" class="gripper"/>
-  </actuator>
-
+  <keyframe>
+    <key name="home" qpos="0 0 0 0 0 0 0" ctrl="0 0 0 0 0 0"/>
+  </keyframe>
 </mujoco>

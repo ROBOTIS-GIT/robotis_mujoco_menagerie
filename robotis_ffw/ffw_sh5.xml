@@ -1,0 +1,775 @@
+<mujoco model="ffw_sh5">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+
+  <option integrator="implicitfast" cone="elliptic" impratio="10"/>
+
+  <asset>
+    <material name="black" rgba="0.2 0.2 0.2 1"/>
+    <material name="white" rgba="1 1 1 1"/>
+    <material name="grey" rgba="0.7 0.7 0.7 1"/>
+
+    <mesh name="base_mobile_assy" file="ffw_s/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="left_wheel" file="ffw_s/left_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="right_wheel" file="ffw_s/right_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="rear_wheel" file="ffw_s/rear_wheel_drive_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lift_link" file="ffw_s/lift_link.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="body_arm_assy" file="ffw_s/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link1" file="ffw_s/head_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link2" file="ffw_s/head_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link1" file="ffw_s/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link2" file="ffw_s/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link3" file="ffw_s/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link4" file="ffw_s/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link5" file="ffw_s/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link6" file="ffw_s/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link7" file="ffw_s/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link1" file="ffw_s/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link2" file="ffw_s/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link3" file="ffw_s/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link4" file="ffw_s/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link5" file="ffw_s/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link6" file="ffw_s/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link7" file="ffw_s/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
+    <!-- HX5-D20 5-finger hand meshes (left) -->
+    <mesh name="hx5_l_base" file="hx5_d20/hx5_d20_left/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_thumb_mcp" file="hx5_d20/hx5_d20_left/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_thumb_mcp2" file="hx5_d20/hx5_d20_left/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_thumb_ip" file="hx5_d20/hx5_d20_left/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_thumb_tip" file="hx5_d20/hx5_d20_left/hx5_d20_thumb_tip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_finger_mcp" file="hx5_d20/hx5_d20_left/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_finger_pip" file="hx5_d20/hx5_d20_left/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_finger_dip" file="hx5_d20/hx5_d20_left/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_l_finger_tip" file="hx5_d20/hx5_d20_left/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001"/>
+    <!-- HX5-D20 5-finger hand meshes (right) -->
+    <mesh name="hx5_r_base" file="hx5_d20/hx5_d20_right/hx5_d20_base_unit.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_thumb_mcp" file="hx5_d20/hx5_d20_right/hx5_d20_thumb_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_thumb_mcp2" file="hx5_d20/hx5_d20_right/hx5_d20_thumb_mcp2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_thumb_ip" file="hx5_d20/hx5_d20_right/hx5_d20_thumb_ip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_thumb_tip" file="hx5_d20/hx5_d20_right/hx5_d20_thumb_tip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_finger_mcp" file="hx5_d20/hx5_d20_right/hx5_d20_finger_mcp.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_finger_pip" file="hx5_d20/hx5_d20_right/hx5_d20_finger_pip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_finger_dip" file="hx5_d20/hx5_d20_right/hx5_d20_finger_dip.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="hx5_r_finger_tip" file="hx5_d20/hx5_d20_right/hx5_d20_finger_tip.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <default>
+    <!-- Wheel steering -->
+    <default class="wheel_steer">
+      <joint frictionloss="0.1" armature="0.5" damping="200.0"/>
+      <position kp="5000" forcerange="-2000 2000"/>
+      <default class="left_wheel_steer">
+        <joint axis="0 0 1" range="-1.58 1.58"/>
+      </default>
+      <default class="right_wheel_steer">
+        <joint axis="0 0 1" range="-1.58 1.58"/>
+      </default>
+      <default class="rear_wheel_steer">
+        <joint axis="0 0 1" range="-1.58 1.58"/>
+      </default>
+    </default>
+    <!-- Wheel drive -->
+    <default class="wheel_drive">
+      <joint type="hinge" axis="0 1 0" damping="2" frictionloss="0.2"/>
+      <velocity kv="1" ctrlrange="-50 50" ctrllimited="true"/>
+    </default>
+    <!-- Slider: lift_joint -->
+    <default class="slider">
+      <joint type="slide" frictionloss="100.0" armature="10.0" damping="5000.0"/>
+      <position kp="10000" forcerange="-100000 100000"/>
+      <default class="lift_joint">
+        <joint axis="0 0 1" range="-0.5 0.0"/>
+      </default>
+    </default>
+    <!-- Head motor -->
+    <default class="head">
+      <joint frictionloss="0.1" armature="0.1" damping="5.0"/>
+      <position kp="200" dampratio="1" forcerange="-10 10"/>
+      <default class="head_joint1">
+        <joint axis="0 1 0" range="-0.2317 0.6951"/>
+      </default>
+      <default class="head_joint2">
+        <joint axis="0 0 1" range="-0.35 0.35"/>
+      </default>
+    </default>
+    <!-- DY-80 motor: arm joint 1, 2 -->
+    <default class="DY_80">
+      <joint frictionloss="0.1" armature="0.5" damping="30.0"/>
+      <position kp="600" dampratio="1" forcerange="-61.4 61.4"/>
+      <default class="arm_l_joint1">
+        <joint axis="0 1 0" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_l_joint2">
+        <joint axis="1 0 0" range="0 3.14"/>
+      </default>
+      <default class="arm_r_joint1">
+        <joint axis="0 1 0" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_r_joint2">
+        <joint axis="1 0 0" range="-3.14 0"/>
+      </default>
+    </default>
+    <!-- DY-70 motor: arm joint 3, 4, 5, 6 -->
+    <default class="DY_70">
+      <joint frictionloss="0.1" armature="0.5" damping="20.0"/>
+      <position kp="600" dampratio="1" forcerange="-31.7 31.7"/>
+      <default class="arm_l_joint3">
+        <joint axis="0 0 1" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_l_joint4">
+        <joint axis="0 1 0" range="-2.9361 1.0786"/>
+      </default>
+      <default class="arm_l_joint5">
+        <joint axis="0 0 1" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_l_joint6">
+        <joint axis="0 1 0" range="-1.57 1.57"/>
+      </default>
+      <default class="arm_r_joint3">
+        <joint axis="0 0 1" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_r_joint4">
+        <joint axis="0 1 0" range="-2.9361 1.0786"/>
+      </default>
+      <default class="arm_r_joint5">
+        <joint axis="0 0 1" range="-3.14 3.14"/>
+      </default>
+      <default class="arm_r_joint6">
+        <joint axis="0 1 0" range="-1.57 1.57"/>
+      </default>
+    </default>
+    <!-- DP-42 motor: arm joint 7 -->
+    <default class="DP_42">
+      <joint frictionloss="0.1" armature="0.1" damping="3.0"/>
+      <position kp="200" dampratio="1" forcerange="-5.1 5.1"/>
+      <default class="arm_l_joint7">
+        <joint axis="1 0 0" range="-1.8201 1.5804"/>
+      </default>
+      <default class="arm_r_joint7">
+        <joint axis="1 0 0" range="-1.5804 1.8201"/>
+      </default>
+    </default>
+    <!-- HX5-D20 5-finger hand -->
+    <default class="finger">
+      <joint frictionloss="0.05" armature="0.05" damping="1.0"/>
+      <position kp="20" dampratio="1" forcerange="-2.0 2.0"/>
+      <!-- Thumb joints -->
+      <default class="thumb_mcp">
+        <joint axis="1 0 0" range="-1.57 1.57"/>
+      </default>
+      <default class="thumb_mcp2">
+        <joint axis="0 0 1" range="-3.14 3.14"/>
+      </default>
+      <default class="thumb_ip">
+        <joint axis="1 0 0" range="-1.57 1.57"/>
+      </default>
+      <default class="thumb_tip">
+        <joint axis="1 0 0" range="-1.57 1.57"/>
+      </default>
+      <!-- Finger MCP (spread) -->
+      <default class="finger_mcp">
+        <joint axis="1 0 0" range="-0.6 0.6"/>
+      </default>
+      <!-- Finger PIP/DIP/TIP (flex) -->
+      <default class="finger_pip">
+        <joint axis="0 1 0" range="0 2.0"/>
+      </default>
+      <default class="finger_dip">
+        <joint axis="0 1 0" range="0 1.57"/>
+      </default>
+      <default class="finger_tip">
+        <joint axis="0 1 0" range="0 1.57"/>
+      </default>
+    </default>
+    <!-- Visual / Collision -->
+    <default class="visual">
+      <geom type="mesh" contype="0" conaffinity="0" density="0" group="2"/>
+    </default>
+    <default class="collision">
+      <geom group="3" type="mesh"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <body name="base_link" pos="0 0 0.15">
+      <inertial pos="-0.0457 0.0066 0.1943" mass="35.99" diaginertia="0.65 0.65 0.96"/>
+      <freejoint name="floating_base"/>
+
+      <!-- base_mobile_assy visual -->
+      <geom type="mesh" mesh="base_mobile_assy" material="black" class="visual"/>
+      <!-- base_mobile_assy collision -->
+      <geom type="box" size="0.2 0.2 0.12" pos="0 0 0.24" rgba="0 0 0 0"/>
+
+      <!-- Left front wheel (steering + driving) -->
+      <body name="left_wheel_steer" pos="0.1371 0.2554 0.27555">
+        <inertial pos="0 0 0" mass="0.5" diaginertia="0.001 0.001 0.001"/>
+        <joint name="left_wheel_steer_joint" class="left_wheel_steer"/>
+        <body name="left_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 -0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="left_wheel_drive_joint" class="wheel_drive"/>
+          <geom type="mesh" mesh="left_wheel" friction="5.0 1.0 0.3" class="visual"/>
+          <geom type="cylinder" size="0.09 0.035" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" group="3"/>
+        </body>
+      </body>
+
+      <!-- Right front wheel (steering + driving) -->
+      <body name="right_wheel_steer" pos="0.1371 -0.2554 0.27555">
+        <inertial pos="0 0 0" mass="0.5" diaginertia="0.001 0.001 0.001"/>
+        <joint name="right_wheel_steer_joint" class="right_wheel_steer"/>
+        <body name="right_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="right_wheel_drive_joint" class="wheel_drive"/>
+          <geom type="mesh" mesh="right_wheel" friction="5.0 1.0 0.3" class="visual"/>
+          <geom type="cylinder" size="0.09 0.035" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" group="3"/>
+        </body>
+      </body>
+
+      <!-- Rear wheel (steering + driving) -->
+      <body name="rear_wheel_steer" pos="-0.2899 0 0.27555">
+        <inertial pos="0 0 0" mass="0.5" diaginertia="0.001 0.001 0.001"/>
+        <joint name="rear_wheel_steer_joint" class="rear_wheel_steer"/>
+        <body name="rear_wheel_drive" pos="0 0 -0.18905">
+          <inertial pos="0 -0.0015 0" mass="3.80" diaginertia="0.00719 0.01156 0.00719"/>
+          <joint name="rear_wheel_drive_joint" class="wheel_drive"/>
+          <geom type="mesh" mesh="rear_wheel" friction="5.0 1.0 0.3" class="visual"/>
+          <geom type="cylinder" size="0.09 0.035" quat="0.707107 -0.707107 0 0" friction="5.0 1.0 0.3" group="3"/>
+        </body>
+      </body>
+
+      <!-- Lift link -->
+      <body name="lift_link" pos="0 0 0">
+        <inertial pos="-0.12869878 -0.00001604 0.89456017" mass="17.9" diaginertia="1.5 1.5 0.05"/>
+        <geom type="mesh" mesh="lift_link" material="grey" class="visual"/>
+        <geom type="mesh" mesh="lift_link" class="collision"/>
+
+        <!-- arm_base_link -->
+        <body name="arm_base_link" pos="0.0055 0 1.4316">
+          <inertial pos="-0.0460732 -2.28101e-05 -0.0270208" quat="0.295276 0.295528 -0.642514 0.642379" mass="8.72176" diaginertia="0.106112 0.0836519 0.0576143"/>
+          <joint name="lift_joint" class="lift_joint"/>
+          <geom type="mesh" mesh="body_arm_assy" material="white" class="visual"/>
+          <geom type="mesh" mesh="body_arm_assy" class="collision"/>
+
+          <!-- Head -->
+          <body name="head_link1" pos="0.0494878 0 0.102123">
+            <joint name="head_joint1" class="head_joint1"/>
+            <geom type="mesh" mesh="head_link1" material="black" class="visual"/>
+            <geom type="mesh" mesh="head_link1" class="collision"/>
+
+            <body name="head_link2" pos="0.0365694 0 0.0563797">
+              <joint name="head_joint2" class="head_joint2"/>
+              <geom type="mesh" mesh="head_link2" material="white" class="visual"/>
+              <geom type="mesh" mesh="head_link2" class="collision"/>
+            </body>
+          </body>
+
+          <!-- Left arm -->
+          <body name="arm_l_link1" pos="0 0.1045 0">
+            <inertial pos="0.0162539 0.115097 0.000116015" quat="-0.229615 0.677745 0.212586 0.665391" mass="1.93395" diaginertia="0.00305502 0.0027509 0.00221577"/>
+            <joint name="arm_l_joint1" class="arm_l_joint1"/>
+            <geom type="mesh" mesh="arm_l_link1" material="black" class="visual"/>
+            <geom type="mesh" mesh="arm_l_link1" class="collision"/>
+
+            <body name="arm_l_link2" pos="0 0.123 0">
+              <inertial pos="0.00909681 -0.000105504 -0.144033" quat="0.692968 0.108459 0.106285 0.704795" mass="2.12414" diaginertia="0.0108537 0.0106882 0.00241736"/>
+              <joint name="arm_l_joint2" class="arm_l_joint2"/>
+              <geom type="mesh" mesh="arm_l_link2" material="black" class="visual"/>
+              <geom type="mesh" mesh="arm_l_link2" class="collision"/>
+
+              <body name="arm_l_link3" pos="0 0 -0.165">
+                <inertial pos="2.51092e-05 0.0179472 -0.108757" quat="0.894344 0.447371 -0.000598238 0.00281074" mass="1.40774" diaginertia="0.00193356 0.00173187 0.00129028"/>
+                <joint name="arm_l_joint3" class="arm_l_joint3"/>
+                <geom type="mesh" mesh="arm_l_link3" material="black" class="visual"/>
+                <geom type="mesh" mesh="arm_l_link3" class="collision"/>
+
+                <body name="arm_l_link4" pos="0.041004 0 -0.135">
+                  <inertial pos="-4.39703e-05 0.00978704 -0.137888" quat="0.984403 -0.175803 -0.00125587 -0.00649472" mass="1.51314" diaginertia="0.00636289 0.00628017 0.00133396"/>
+                  <joint name="arm_l_joint4" class="arm_l_joint4"/>
+                  <geom type="mesh" mesh="arm_l_link4" material="black" class="visual"/>
+                  <geom type="mesh" mesh="arm_l_link4" class="collision"/>
+
+                  <body name="arm_l_link5" pos="-0.041004 0 -0.1489">
+                    <inertial pos="-4.95306e-05 0.0187957 -0.0983639" quat="0.838675 0.544584 0.00138926 -0.00713051" mass="1.34419" diaginertia="0.00169917 0.00156903 0.00116769"/>
+                    <joint name="arm_l_joint5" class="arm_l_joint5"/>
+                    <geom type="mesh" mesh="arm_l_link5" material="black" class="visual"/>
+                    <geom type="mesh" mesh="arm_l_link5" class="collision"/>
+
+                    <body name="arm_l_link6" pos="0 0 -0.1041">
+                      <inertial pos="0.00038449 0.0194298 -0.0639456" quat="0.658925 -0.254422 0.24959 0.662414" mass="0.636234" diaginertia="0.00155561 0.00138897 0.00049676"/>
+                      <joint name="arm_l_joint6" class="arm_l_joint6"/>
+                      <geom type="mesh" mesh="arm_l_link6" material="black" class="visual"/>
+                      <geom type="mesh" mesh="arm_l_link6" class="collision"/>
+
+                      <body name="arm_l_link7" pos="0 0 -0.0885">
+                        <inertial pos="-0.00237181 0.00249345 -0.0980007" quat="0.707876 -0.0176581 -0.0477307 0.704501" mass="0.384359" diaginertia="0.00141022 0.00125626 0.000287964"/>
+                        <joint name="arm_l_joint7" class="arm_l_joint7"/>
+                        <geom type="mesh" mesh="arm_l_link7" material="black" class="visual"/>
+                        <geom type="mesh" mesh="arm_l_link7" class="collision"/>
+                        <geom size="0.0115 0.021 0.021" pos="0.107944 0 -0.065588" quat="0.475435 -0.475435 0.523413 0.523413" type="box"/>
+
+                        <!-- Left hand (HX5-D20) -->
+                        <body name="hx5_l_base" pos="0 0 -0.078" quat="0 -0.7071068 0.7071068 0">
+                          <inertial pos="-0.00262263 -0.00168363 0.0622837" mass="0.301852" diaginertia="0.000528544 0.000382320 0.000201250"/>
+                          <geom type="mesh" mesh="hx5_l_base" material="black" class="visual"/>
+                          <geom type="mesh" mesh="hx5_l_base" class="collision"/>
+
+                          <!-- Thumb (4 joints) -->
+                          <body name="finger_l_link1" pos="-0.0125 -0.03493 0.04475">
+                            <inertial pos="0.0238075 -0.00138644 -1.72456e-05" mass="0.0408685" diaginertia="2.88272e-06 9.39968e-06 9.68571e-06"/>
+                            <joint name="finger_l_joint1" class="thumb_mcp"/>
+                            <geom type="mesh" mesh="hx5_l_thumb_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_l_thumb_mcp" class="collision"/>
+                            <body name="finger_l_link2" pos="0.039 0 0">
+                              <inertial pos="0.000356679 -0.0139993 0.000359207" mass="0.0117606" diaginertia="1.30235e-06 1.05564e-06 1.30247e-06"/>
+                              <joint name="finger_l_joint2" class="thumb_mcp2"/>
+                              <geom type="mesh" mesh="hx5_l_thumb_mcp2" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_l_thumb_mcp2" class="collision"/>
+                              <body name="finger_l_link3" pos="0 -0.028 0">
+                                <inertial pos="0.000101462 -0.0113435 4.08056e-06" mass="0.034690" diaginertia="5.03702e-06 2.25807e-06 5.40298e-06"/>
+                                <joint name="finger_l_joint3" class="thumb_ip"/>
+                                <geom type="mesh" mesh="hx5_l_thumb_ip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_l_thumb_ip" class="collision"/>
+                                <body name="finger_l_link4" pos="0 -0.0355 0">
+                                  <inertial pos="-1.79389e-05 -0.0168391 0.000236024" mass="0.043781" diaginertia="1.12255e-05 2.79566e-06 1.1393e-05"/>
+                                  <joint name="finger_l_joint4" class="thumb_tip"/>
+                                  <geom type="mesh" mesh="hx5_l_thumb_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_l_thumb_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Index finger (4 joints) -->
+                          <body name="finger_l_link5" pos="-0.0015 -0.03608 0.09575">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_l_joint5" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" class="collision"/>
+                            <body name="finger_l_link6" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_l_joint6" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" class="collision"/>
+                              <body name="finger_l_link7" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_l_joint7" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" class="collision"/>
+                                <body name="finger_l_link8" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_l_joint8" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Middle finger (4 joints) -->
+                          <body name="finger_l_link9" pos="-0.0015 -0.00908 0.10353">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_l_joint9" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" class="collision"/>
+                            <body name="finger_l_link10" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_l_joint10" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" class="collision"/>
+                              <body name="finger_l_link11" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_l_joint11" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" class="collision"/>
+                                <body name="finger_l_link12" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_l_joint12" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Ring finger (4 joints) -->
+                          <body name="finger_l_link13" pos="-0.0015 0.01792 0.09775">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_l_joint13" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" class="collision"/>
+                            <body name="finger_l_link14" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_l_joint14" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" class="collision"/>
+                              <body name="finger_l_link15" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_l_joint15" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" class="collision"/>
+                                <body name="finger_l_link16" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_l_joint16" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Pinky finger (4 joints) -->
+                          <body name="finger_l_link17" pos="-0.0015 0.04492 0.07875">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_l_joint17" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_l_finger_mcp" class="collision"/>
+                            <body name="finger_l_link18" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_l_joint18" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_l_finger_pip" class="collision"/>
+                              <body name="finger_l_link19" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_l_joint19" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_l_finger_dip" class="collision"/>
+                                <body name="finger_l_link20" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_l_joint20" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_l_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+
+          <!-- Right arm -->
+          <body name="arm_r_link1" pos="0 -0.1045 0">
+            <inertial pos="0.0162454 -0.115083 -0.000116015" quat="0.212043 0.665609 -0.229062 0.677889" mass="1.93395" diaginertia="0.00305635 0.00275332 0.00221466"/>
+            <joint name="arm_r_joint1" class="arm_r_joint1"/>
+            <geom type="mesh" mesh="arm_r_link1" material="black" class="visual"/>
+            <geom type="mesh" mesh="arm_r_link1" class="collision"/>
+
+            <body name="arm_r_link2" pos="0 -0.123 0">
+              <inertial pos="0.00904096 0.000105802 -0.144033" quat="0.707129 0.105833 0.108702 0.690617" mass="2.12414" diaginertia="0.0108559 0.0106863 0.00242145"/>
+              <joint name="arm_r_joint2" class="arm_r_joint2"/>
+              <geom type="mesh" mesh="arm_r_link2" material="black" class="visual"/>
+              <geom type="mesh" mesh="arm_r_link2" class="collision"/>
+
+              <body name="arm_r_link3" pos="0 0 -0.165">
+                <inertial pos="-2.51092e-05 -0.0179472 -0.108765" quat="0.447823 0.894113 0.00400928 -0.000680335" mass="1.40774" diaginertia="0.00193273 0.0017314 0.00128994"/>
+                <joint name="arm_r_joint3" class="arm_r_joint3"/>
+                <geom type="mesh" mesh="arm_r_link3" material="black" class="visual"/>
+                <geom type="mesh" mesh="arm_r_link3" class="collision"/>
+
+                <body name="arm_r_link4" pos="0.041004 0 -0.135">
+                  <inertial pos="4.39703e-05 -0.00978736 -0.137888" quat="0.984402 0.175809 0.00125565 -0.00649329" mass="1.51314" diaginertia="0.00636295 0.00628021 0.00133398"/>
+                  <joint name="arm_r_joint4" class="arm_r_joint4"/>
+                  <geom type="mesh" mesh="arm_r_link4" material="black" class="visual"/>
+                  <geom type="mesh" mesh="arm_r_link4" class="collision"/>
+
+                  <body name="arm_r_link5" pos="-0.041004 0 -0.1489">
+                    <inertial pos="-2.62962e-05 -0.0187957 -0.0983871" quat="0.546043 0.837751 0.00318354 -0.000761107" mass="1.34419" diaginertia="0.00169762 0.00156986 0.00116911"/>
+                    <joint name="arm_r_joint5" class="arm_r_joint5"/>
+                    <geom type="mesh" mesh="arm_r_link5" material="black" class="visual"/>
+                    <geom type="mesh" mesh="arm_r_link5" class="collision"/>
+
+                    <body name="arm_r_link6" pos="0 0 -0.1041">
+                      <inertial pos="0.000339839 -0.0194304 -0.0639459" quat="0.662489 0.249825 -0.2542 0.658846" mass="0.636234" diaginertia="0.00155564 0.00138901 0.000496769"/>
+                      <joint name="arm_r_joint6" class="arm_r_joint6"/>
+                      <geom type="mesh" mesh="arm_r_link6" material="black" class="visual"/>
+                      <geom type="mesh" mesh="arm_r_link6" class="collision"/>
+
+                      <body name="arm_r_link7" pos="0 0 -0.0885">
+                        <inertial pos="-0.00242011 -0.00201564 -0.0911446" quat="0.703942 -0.0528198 -0.0236914 0.707894" mass="0.384359" diaginertia="0.00125471 0.0011001 0.000310982"/>
+                        <joint name="arm_r_joint7" class="arm_r_joint7"/>
+                        <geom type="mesh" mesh="arm_r_link7" material="black" class="visual"/>
+                        <geom type="mesh" mesh="arm_r_link7" class="collision"/>
+                        <geom size="0.0115 0.021 0.021" pos="0.107944 0 -0.065588" quat="0.475435 -0.475435 0.523413 0.523413" type="box"/>
+
+                        <!-- Right hand (HX5-D20) -->
+                        <body name="hx5_r_base" pos="0 0 -0.078" quat="0 0.7071068 0.7071068 0">
+                          <inertial pos="-0.00259546 0.00179263 0.0629577" mass="0.301852" diaginertia="0.000542413 0.000389333 0.000210116"/>
+                          <geom type="mesh" mesh="hx5_r_base" material="black" class="visual"/>
+                          <geom type="mesh" mesh="hx5_r_base" class="collision"/>
+
+                          <!-- Thumb (4 joints) -->
+                          <body name="finger_r_link1" pos="-0.0125 0.03493 0.04475">
+                            <inertial pos="0.0238075 0.00131524 0.000460355" mass="0.0408685" diaginertia="2.88193e-06 9.43334e-06 9.65126e-06"/>
+                            <joint name="finger_r_joint1" class="thumb_mcp"/>
+                            <geom type="mesh" mesh="hx5_r_thumb_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_r_thumb_mcp" class="collision"/>
+                            <body name="finger_r_link2" pos="0.039 0 0">
+                              <inertial pos="-0.000356679 0.0139993 0.000359207" mass="0.0117606" diaginertia="1.30235e-06 1.05564e-06 1.30247e-06"/>
+                              <joint name="finger_r_joint2" class="thumb_mcp2"/>
+                              <geom type="mesh" mesh="hx5_r_thumb_mcp2" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_r_thumb_mcp2" class="collision"/>
+                              <body name="finger_r_link3" pos="0 0.028 0">
+                                <inertial pos="-0.000101462 0.0113435 4.08056e-06" mass="0.034690" diaginertia="5.03702e-06 2.25807e-06 5.40298e-06"/>
+                                <joint name="finger_r_joint3" class="thumb_ip"/>
+                                <geom type="mesh" mesh="hx5_r_thumb_ip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_r_thumb_ip" class="collision"/>
+                                <body name="finger_r_link4" pos="0 0.0355 0">
+                                  <inertial pos="6.66050e-05 0.0168245 0.000223985" mass="0.043875" diaginertia="1.11607e-05 2.80794e-06 1.13431e-05"/>
+                                  <joint name="finger_r_joint4" class="thumb_tip"/>
+                                  <geom type="mesh" mesh="hx5_r_thumb_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_r_thumb_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Index finger (4 joints) -->
+                          <body name="finger_r_link5" pos="-0.0015 0.03608 0.09575">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_r_joint5" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" class="collision"/>
+                            <body name="finger_r_link6" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_r_joint6" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" class="collision"/>
+                              <body name="finger_r_link7" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_r_joint7" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" class="collision"/>
+                                <body name="finger_r_link8" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_r_joint8" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Middle finger (4 joints) -->
+                          <body name="finger_r_link9" pos="-0.0015 0.00908 0.10353">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_r_joint9" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" class="collision"/>
+                            <body name="finger_r_link10" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_r_joint10" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" class="collision"/>
+                              <body name="finger_r_link11" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_r_joint11" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" class="collision"/>
+                                <body name="finger_r_link12" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_r_joint12" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Ring finger (4 joints) -->
+                          <body name="finger_r_link13" pos="-0.0015 -0.01792 0.09775">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_r_joint13" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" class="collision"/>
+                            <body name="finger_r_link14" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_r_joint14" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" class="collision"/>
+                              <body name="finger_r_link15" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_r_joint15" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" class="collision"/>
+                                <body name="finger_r_link16" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_r_joint16" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+
+                          <!-- Pinky finger (4 joints) -->
+                          <body name="finger_r_link17" pos="-0.0015 -0.04492 0.07875">
+                            <inertial pos="0.00519340 -1.81631e-05 0.0211155" mass="0.0388044" diaginertia="3.52499e-06 5.79216e-06 4.71268e-06"/>
+                            <joint name="finger_r_joint17" class="finger_mcp"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" material="black" class="visual"/>
+                            <geom type="mesh" mesh="hx5_r_finger_mcp" class="collision"/>
+                            <body name="finger_r_link18" pos="0.0165 0 0.0235">
+                              <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                              <joint name="finger_r_joint18" class="finger_pip"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" material="black" class="visual"/>
+                              <geom type="mesh" mesh="hx5_r_finger_pip" class="collision"/>
+                              <body name="finger_r_link19" pos="0 0 0.0355">
+                                <inertial pos="4.08056e-06 0.000101462 0.0241565" mass="0.034690" diaginertia="5.40298e-06 5.03702e-06 2.25807e-06"/>
+                                <joint name="finger_r_joint19" class="finger_dip"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" material="black" class="visual"/>
+                                <geom type="mesh" mesh="hx5_r_finger_dip" class="collision"/>
+                                <body name="finger_r_link20" pos="0 0 0.0355">
+                                  <inertial pos="0.000710251 0.000472384 0.0180986" mass="0.013637" diaginertia="2.23243e-06 2.01881e-06 1.07866e-06"/>
+                                  <joint name="finger_r_joint20" class="finger_tip"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" material="black" class="visual"/>
+                                  <geom type="mesh" mesh="hx5_r_finger_tip" class="collision"/>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <!-- Mobile base: steering (position control) -->
+    <position class="left_wheel_steer" name="left_wheel_steer" joint="left_wheel_steer_joint" inheritrange="1"/>
+    <position class="right_wheel_steer" name="right_wheel_steer" joint="right_wheel_steer_joint" inheritrange="1"/>
+    <position class="rear_wheel_steer" name="rear_wheel_steer" joint="rear_wheel_steer_joint" inheritrange="1"/>
+    <!-- Mobile base: drive (velocity control) -->
+    <velocity class="wheel_drive" name="left_wheel_drive" joint="left_wheel_drive_joint"/>
+    <velocity class="wheel_drive" name="right_wheel_drive" joint="right_wheel_drive_joint"/>
+    <velocity class="wheel_drive" name="rear_wheel_drive" joint="rear_wheel_drive_joint"/>
+    <!-- Slider -->
+    <position class="lift_joint" name="lift_joint" joint="lift_joint" inheritrange="1"/>
+    <!-- Head -->
+    <position class="head_joint1" name="head_joint1" joint="head_joint1" inheritrange="1"/>
+    <position class="head_joint2" name="head_joint2" joint="head_joint2" inheritrange="1"/>
+    <!-- Left arm -->
+    <position class="arm_l_joint1" name="arm_l_joint1" joint="arm_l_joint1" inheritrange="1"/>
+    <position class="arm_l_joint2" name="arm_l_joint2" joint="arm_l_joint2" inheritrange="1"/>
+    <position class="arm_l_joint3" name="arm_l_joint3" joint="arm_l_joint3" inheritrange="1"/>
+    <position class="arm_l_joint4" name="arm_l_joint4" joint="arm_l_joint4" inheritrange="1"/>
+    <position class="arm_l_joint5" name="arm_l_joint5" joint="arm_l_joint5" inheritrange="1"/>
+    <position class="arm_l_joint6" name="arm_l_joint6" joint="arm_l_joint6" inheritrange="1"/>
+    <position class="arm_l_joint7" name="arm_l_joint7" joint="arm_l_joint7" inheritrange="1"/>
+    <!-- Left hand fingers -->
+    <position class="thumb_mcp" name="finger_l_joint1" joint="finger_l_joint1" inheritrange="1"/>
+    <position class="thumb_mcp2" name="finger_l_joint2" joint="finger_l_joint2" inheritrange="1"/>
+    <position class="thumb_ip" name="finger_l_joint3" joint="finger_l_joint3" inheritrange="1"/>
+    <position class="thumb_tip" name="finger_l_joint4" joint="finger_l_joint4" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_l_joint5" joint="finger_l_joint5" inheritrange="1"/>
+    <position class="finger_pip" name="finger_l_joint6" joint="finger_l_joint6" inheritrange="1"/>
+    <position class="finger_dip" name="finger_l_joint7" joint="finger_l_joint7" inheritrange="1"/>
+    <position class="finger_tip" name="finger_l_joint8" joint="finger_l_joint8" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_l_joint9" joint="finger_l_joint9" inheritrange="1"/>
+    <position class="finger_pip" name="finger_l_joint10" joint="finger_l_joint10" inheritrange="1"/>
+    <position class="finger_dip" name="finger_l_joint11" joint="finger_l_joint11" inheritrange="1"/>
+    <position class="finger_tip" name="finger_l_joint12" joint="finger_l_joint12" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_l_joint13" joint="finger_l_joint13" inheritrange="1"/>
+    <position class="finger_pip" name="finger_l_joint14" joint="finger_l_joint14" inheritrange="1"/>
+    <position class="finger_dip" name="finger_l_joint15" joint="finger_l_joint15" inheritrange="1"/>
+    <position class="finger_tip" name="finger_l_joint16" joint="finger_l_joint16" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_l_joint17" joint="finger_l_joint17" inheritrange="1"/>
+    <position class="finger_pip" name="finger_l_joint18" joint="finger_l_joint18" inheritrange="1"/>
+    <position class="finger_dip" name="finger_l_joint19" joint="finger_l_joint19" inheritrange="1"/>
+    <position class="finger_tip" name="finger_l_joint20" joint="finger_l_joint20" inheritrange="1"/>
+    <!-- Right arm -->
+    <position class="arm_r_joint1" name="arm_r_joint1" joint="arm_r_joint1" inheritrange="1"/>
+    <position class="arm_r_joint2" name="arm_r_joint2" joint="arm_r_joint2" inheritrange="1"/>
+    <position class="arm_r_joint3" name="arm_r_joint3" joint="arm_r_joint3" inheritrange="1"/>
+    <position class="arm_r_joint4" name="arm_r_joint4" joint="arm_r_joint4" inheritrange="1"/>
+    <position class="arm_r_joint5" name="arm_r_joint5" joint="arm_r_joint5" inheritrange="1"/>
+    <position class="arm_r_joint6" name="arm_r_joint6" joint="arm_r_joint6" inheritrange="1"/>
+    <position class="arm_r_joint7" name="arm_r_joint7" joint="arm_r_joint7" inheritrange="1"/>
+    <!-- Right hand fingers -->
+    <position class="thumb_mcp" name="finger_r_joint1" joint="finger_r_joint1" inheritrange="1"/>
+    <position class="thumb_mcp2" name="finger_r_joint2" joint="finger_r_joint2" inheritrange="1"/>
+    <position class="thumb_ip" name="finger_r_joint3" joint="finger_r_joint3" inheritrange="1"/>
+    <position class="thumb_tip" name="finger_r_joint4" joint="finger_r_joint4" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_r_joint5" joint="finger_r_joint5" inheritrange="1"/>
+    <position class="finger_pip" name="finger_r_joint6" joint="finger_r_joint6" inheritrange="1"/>
+    <position class="finger_dip" name="finger_r_joint7" joint="finger_r_joint7" inheritrange="1"/>
+    <position class="finger_tip" name="finger_r_joint8" joint="finger_r_joint8" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_r_joint9" joint="finger_r_joint9" inheritrange="1"/>
+    <position class="finger_pip" name="finger_r_joint10" joint="finger_r_joint10" inheritrange="1"/>
+    <position class="finger_dip" name="finger_r_joint11" joint="finger_r_joint11" inheritrange="1"/>
+    <position class="finger_tip" name="finger_r_joint12" joint="finger_r_joint12" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_r_joint13" joint="finger_r_joint13" inheritrange="1"/>
+    <position class="finger_pip" name="finger_r_joint14" joint="finger_r_joint14" inheritrange="1"/>
+    <position class="finger_dip" name="finger_r_joint15" joint="finger_r_joint15" inheritrange="1"/>
+    <position class="finger_tip" name="finger_r_joint16" joint="finger_r_joint16" inheritrange="1"/>
+    <position class="finger_mcp" name="finger_r_joint17" joint="finger_r_joint17" inheritrange="1"/>
+    <position class="finger_pip" name="finger_r_joint18" joint="finger_r_joint18" inheritrange="1"/>
+    <position class="finger_dip" name="finger_r_joint19" joint="finger_r_joint19" inheritrange="1"/>
+    <position class="finger_tip" name="finger_r_joint20" joint="finger_r_joint20" inheritrange="1"/>
+  </actuator>
+
+  <contact>
+    <exclude body1="head_link1" body2="head_link2"/>
+    <exclude body1="arm_base_link" body2="head_link1"/>
+    <exclude body1="arm_base_link" body2="head_link2"/>
+    <exclude body1="base_link" body2="left_wheel_steer"/>
+    <exclude body1="base_link" body2="right_wheel_steer"/>
+    <exclude body1="base_link" body2="rear_wheel_steer"/>
+    <exclude body1="base_link" body2="lift_link"/>
+    <exclude body1="lift_link" body2="arm_base_link"/>
+    <exclude body1="arm_base_link" body2="arm_l_link1"/>
+    <exclude body1="arm_base_link" body2="arm_r_link1"/>
+    <!-- Left hand -->
+    <exclude body1="arm_l_link7" body2="hx5_l_base"/>
+    <exclude body1="hx5_l_base" body2="finger_l_link1"/>
+    <exclude body1="finger_l_link1" body2="finger_l_link2"/>
+    <exclude body1="finger_l_link2" body2="finger_l_link3"/>
+    <exclude body1="finger_l_link3" body2="finger_l_link4"/>
+    <exclude body1="hx5_l_base" body2="finger_l_link5"/>
+    <exclude body1="finger_l_link5" body2="finger_l_link6"/>
+    <exclude body1="finger_l_link6" body2="finger_l_link7"/>
+    <exclude body1="finger_l_link7" body2="finger_l_link8"/>
+    <exclude body1="hx5_l_base" body2="finger_l_link9"/>
+    <exclude body1="finger_l_link9" body2="finger_l_link10"/>
+    <exclude body1="finger_l_link10" body2="finger_l_link11"/>
+    <exclude body1="finger_l_link11" body2="finger_l_link12"/>
+    <exclude body1="hx5_l_base" body2="finger_l_link13"/>
+    <exclude body1="finger_l_link13" body2="finger_l_link14"/>
+    <exclude body1="finger_l_link14" body2="finger_l_link15"/>
+    <exclude body1="finger_l_link15" body2="finger_l_link16"/>
+    <exclude body1="hx5_l_base" body2="finger_l_link17"/>
+    <exclude body1="finger_l_link17" body2="finger_l_link18"/>
+    <exclude body1="finger_l_link18" body2="finger_l_link19"/>
+    <exclude body1="finger_l_link19" body2="finger_l_link20"/>
+    <!-- Right hand -->
+    <exclude body1="arm_r_link7" body2="hx5_r_base"/>
+    <exclude body1="hx5_r_base" body2="finger_r_link1"/>
+    <exclude body1="finger_r_link1" body2="finger_r_link2"/>
+    <exclude body1="finger_r_link2" body2="finger_r_link3"/>
+    <exclude body1="finger_r_link3" body2="finger_r_link4"/>
+    <exclude body1="hx5_r_base" body2="finger_r_link5"/>
+    <exclude body1="finger_r_link5" body2="finger_r_link6"/>
+    <exclude body1="finger_r_link6" body2="finger_r_link7"/>
+    <exclude body1="finger_r_link7" body2="finger_r_link8"/>
+    <exclude body1="hx5_r_base" body2="finger_r_link9"/>
+    <exclude body1="finger_r_link9" body2="finger_r_link10"/>
+    <exclude body1="finger_r_link10" body2="finger_r_link11"/>
+    <exclude body1="finger_r_link11" body2="finger_r_link12"/>
+    <exclude body1="hx5_r_base" body2="finger_r_link13"/>
+    <exclude body1="finger_r_link13" body2="finger_r_link14"/>
+    <exclude body1="finger_r_link14" body2="finger_r_link15"/>
+    <exclude body1="finger_r_link15" body2="finger_r_link16"/>
+    <exclude body1="hx5_r_base" body2="finger_r_link17"/>
+    <exclude body1="finger_r_link17" body2="finger_r_link18"/>
+    <exclude body1="finger_r_link18" body2="finger_r_link19"/>
+    <exclude body1="finger_r_link19" body2="finger_r_link20"/>
+  </contact>
+
+</mujoco>

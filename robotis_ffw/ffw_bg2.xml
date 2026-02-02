@@ -7,24 +7,24 @@
     <material name="black" rgba="0.2 0.2 0.2 1"/>
     <material name="white" rgba="1 1 1 1"/>
 
-    <mesh name="base_mobile_assy" file="ffw_bg2/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="body_arm_assy" file="ffw_bg2/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="head_link1" file="ffw_bg2/head_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="head_link2" file="ffw_bg2/head_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link1" file="ffw_bg2/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link2" file="ffw_bg2/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link3" file="ffw_bg2/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link4" file="ffw_bg2/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link5" file="ffw_bg2/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link6" file="ffw_bg2/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_l_link7" file="ffw_bg2/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link1" file="ffw_bg2/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link2" file="ffw_bg2/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link3" file="ffw_bg2/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link4" file="ffw_bg2/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link5" file="ffw_bg2/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link6" file="ffw_bg2/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
-    <mesh name="arm_r_link7" file="ffw_bg2/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="base_mobile_assy" file="ffw_b/base_mobile_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="body_arm_assy" file="ffw_b/body_arm_assy.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link1" file="ffw_b/head_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="head_link2" file="ffw_b/head_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link1" file="ffw_b/arm_l_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link2" file="ffw_b/arm_l_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link3" file="ffw_b/arm_l_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link4" file="ffw_b/arm_l_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link5" file="ffw_b/arm_l_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link6" file="ffw_b/arm_l_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_l_link7" file="ffw_b/arm_l_link7.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link1" file="ffw_b/arm_r_link1.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link2" file="ffw_b/arm_r_link2.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link3" file="ffw_b/arm_r_link3.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link4" file="ffw_b/arm_r_link4.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link5" file="ffw_b/arm_r_link5.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link6" file="ffw_b/arm_r_link6.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="arm_r_link7" file="ffw_b/arm_r_link7.stl" scale="0.001 0.001 0.001"/>
     <mesh name="gripper_base" file="rh_p12_rn/base.stl" scale="0.001 0.001 0.001"/>
     <mesh name="gripper_r1" file="rh_p12_rn/r1.stl" scale="0.001 0.001 0.001"/>
     <mesh name="gripper_r2" file="rh_p12_rn/r2.stl" scale="0.001 0.001 0.001"/>
@@ -44,7 +44,7 @@
     <!-- Head motor -->
     <default class="head">
       <joint frictionloss="0.1" armature="0.1" damping="5.0"/>
-      <position kp="50" dampratio="1" forcerange="-10 10"/>
+      <position kp="200" dampratio="1" forcerange="-10 10"/>
       <default class="head_joint1">
         <joint axis="0 1 0" range="-0.2317 0.6951"/>
       </default>
@@ -111,13 +111,16 @@
     </default>
     <!-- RH-P12-RN Gripper -->
     <default class="gripper">
-      <joint frictionloss="0.1" armature="0.1"/>
+      <joint frictionloss="0.1" armature="0.1" damping="1.0"/>
       <position kp="50" dampratio="1" forcerange="-3.5 3.5"/>
       <default class="gripper_joint">
         <joint axis="1 0 0" range="0 1.1"/>
       </default>
       <default class="gripper_mimic">
         <joint axis="1 0 0" range="-1.1 0"/>
+      </default>
+      <default class="gripper_mimic_pos">
+        <joint axis="1 0 0" range="0 1.1"/>
       </default>
     </default>
     <!-- Visual / Collision -->
@@ -144,13 +147,11 @@
 
       <!-- Head -->
       <body name="head_link1" pos="0.0494878 0 0.102123">
-        <inertial pos="-0.00732988 0 0.0434363" quat="0.688381 -0.161651 -0.161651 0.688381" mass="0.139473" diaginertia="6.54445e-05 5.99779e-05 4.75755e-05"/>
         <joint name="head_joint1" class="head_joint1"/>
         <geom type="mesh" mesh="head_link1" material="black" class="visual"/>
         <geom type="mesh" mesh="head_link1" class="collision"/>
 
         <body name="head_link2" pos="0.0365694 0 0.0563797">
-          <inertial pos="0.00877907 -8.40392e-05 0.0425432" quat="0.653422 0.653616 0.269949 -0.270098" mass="0.145078" diaginertia="0.000186994 0.000179978 2.28387e-05"/>
           <joint name="head_joint2" class="head_joint2"/>
           <geom type="mesh" mesh="head_link2" material="white" class="visual"/>
           <geom type="mesh" mesh="head_link2" class="collision"/>
@@ -224,7 +225,7 @@
                       <geom type="mesh" mesh="gripper_l1" class="collision"/>
                       <body name="gripper_l_l2" pos="0 -0.0493634 0.0285">
                         <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
-                        <joint name="gripper_l_joint4" class="gripper_mimic"/>
+                        <joint name="gripper_l_joint4" class="gripper_mimic_pos"/>
                         <geom type="mesh" mesh="gripper_l2" material="black" class="visual"/>
                         <geom type="mesh" mesh="gripper_l2" class="collision"/>
                       </body>
@@ -304,7 +305,7 @@
                       <geom type="mesh" mesh="gripper_l1" class="collision"/>
                       <body name="gripper_r_l2" pos="0 -0.0493634 0.0285">
                         <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
-                        <joint name="gripper_r_joint4" class="gripper_mimic"/>
+                        <joint name="gripper_r_joint4" class="gripper_mimic_pos"/>
                         <geom type="mesh" mesh="gripper_l2" material="black" class="visual"/>
                         <geom type="mesh" mesh="gripper_l2" class="collision"/>
                       </body>
@@ -355,24 +356,30 @@
     <exclude body1="arm_base_link" body2="arm_r_link1"/>
     <exclude body1="arm_l_link7" body2="gripper_l_r1"/>
     <exclude body1="arm_l_link7" body2="gripper_l_l1"/>
+    <exclude body1="arm_l_link7" body2="gripper_l_r2"/>
+    <exclude body1="arm_l_link7" body2="gripper_l_l2"/>
     <exclude body1="gripper_l_r1" body2="gripper_l_r2"/>
     <exclude body1="gripper_l_l1" body2="gripper_l_l2"/>
     <exclude body1="gripper_l_r1" body2="gripper_l_l1"/>
+    <exclude body1="gripper_l_r2" body2="gripper_l_l2"/>
     <exclude body1="arm_r_link7" body2="gripper_r_r1"/>
     <exclude body1="arm_r_link7" body2="gripper_r_l1"/>
+    <exclude body1="arm_r_link7" body2="gripper_r_r2"/>
+    <exclude body1="arm_r_link7" body2="gripper_r_l2"/>
     <exclude body1="gripper_r_r1" body2="gripper_r_r2"/>
     <exclude body1="gripper_r_l1" body2="gripper_r_l2"/>
     <exclude body1="gripper_r_r1" body2="gripper_r_l1"/>
+    <exclude body1="gripper_r_r2" body2="gripper_r_l2"/>
   </contact>
 
   <equality>
     <!-- Left gripper mimic -->
-    <joint joint1="gripper_l_joint1" joint2="gripper_l_joint3" polycoef="0 -1 0 0 0"/>
     <joint joint1="gripper_l_joint1" joint2="gripper_l_joint2" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_l_joint1" joint2="gripper_l_joint3" polycoef="0 -1 0 0 0"/>
     <joint joint1="gripper_l_joint1" joint2="gripper_l_joint4" polycoef="0 1 0 0 0"/>
     <!-- Right gripper mimic -->
-    <joint joint1="gripper_r_joint1" joint2="gripper_r_joint3" polycoef="0 -1 0 0 0"/>
     <joint joint1="gripper_r_joint1" joint2="gripper_r_joint2" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_r_joint1" joint2="gripper_r_joint3" polycoef="0 -1 0 0 0"/>
     <joint joint1="gripper_r_joint1" joint2="gripper_r_joint4" polycoef="0 1 0 0 0"/>
   </equality>
 

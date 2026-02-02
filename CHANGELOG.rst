@@ -1,6 +1,16 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.1.0 (2026-02-02)
+------------------
+* Added FFW-SH5 model (FFW-S base with HX5-D20 5-finger hand)
+* Reorganized asset folder structure for clarity (ffw_sg2 → ffw_s, ffw_bg2 → ffw_b)
+* Fixed head joint movement by adding contact excludes between head_link1, head_link2, and arm_base_link
+* Fixed gripper joint movement by adding contact excludes between arm_link7 and gripper fingertip parts
+* Fixed gripper mimic joint configuration by adding gripper_mimic_pos class for positive range joints
+* Added damping to gripper joints for improved stability
+* Contributors: Taehyeong Kim
+
 1.0.0 (2026-01-16)
 ------------------
 * Tuned simulation parameters for all robot models (FFW-BG2, FFW-SG2, OMY, OMX, TurtleBot3)

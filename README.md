@@ -1,7 +1,7 @@
 # robotis_mujoco_menagerie
 A collection of models for the MuJoCo physics engine from ROBOTIS
 
-## AI Worker (FFW-sh5)
+## AI Worker (FFW-SH5)
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw_sh5.png" width="300">
 
 ## AI Worker (FFW-SG2)

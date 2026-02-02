@@ -52,13 +52,16 @@
     </default>
     <!-- DX motor: Gripper -->
     <default class="DX">
-      <joint frictionloss="0.1" armature="0.1"/>
+      <joint frictionloss="0.1" armature="0.1" damping="1.0"/>
       <position kp="50" dampratio="1" forcerange="-3.5 3.5"/>
       <default class="Gripper">
         <joint axis="1 0 0" range="0 1.1"/>
       </default>
       <default class="Gripper_mimic">
         <joint axis="1 0 0" range="-1.1 0"/>
+      </default>
+      <default class="Gripper_mimic_pos">
+        <joint axis="1 0 0" range="0 1.1"/>
       </default>
     </default>
     <!-- Visual / Collision -->
@@ -129,7 +132,7 @@
                     <geom mesh="l1" class="collision"/>
                     <body name="rh_l2" pos="0 -0.0493634 0.0285">
                       <inertial pos="0 -0.006 0.011" mass="0.022" diaginertia="1e-06 1e-06 1e-06"/>
-                      <joint name="rh_l2" class="Gripper_mimic"/>
+                      <joint name="rh_l2" class="Gripper_mimic_pos"/>
                       <geom mesh="l2" class="visual"/>
                       <geom mesh="l2" class="collision"/>
                     </body>
@@ -157,18 +160,21 @@
     <exclude body1="base_unit" body2="link1"/>
     <exclude body1="link6" body2="rh_r1"/>
     <exclude body1="link6" body2="rh_l1"/>
+    <exclude body1="link6" body2="rh_r2"/>
+    <exclude body1="link6" body2="rh_l2"/>
     <exclude body1="rh_r1" body2="rh_r2"/>
     <exclude body1="rh_l1" body2="rh_l2"/>
     <exclude body1="rh_r1" body2="rh_l1"/>
+    <exclude body1="rh_r2" body2="rh_l2"/>
   </contact>
 
   <equality>
     <!-- rh_r1 moves -> rh_l1 follows with -1 gear ratio -->
-    <joint joint1="rh_r1" joint2="rh_l1" polycoef="0 -1 0 0 0"/>
+    <joint joint1="rh_l1" joint2="rh_r1" polycoef="0 -1 0 0 0"/>
     <!-- rh_r1 moves -> rh_r2 follows with -1 gear ratio -->
-    <joint joint1="rh_r1" joint2="rh_r2" polycoef="0 -1 0 0 0"/>
+    <joint joint1="rh_r2" joint2="rh_r1" polycoef="0 -1 0 0 0"/>
     <!-- rh_l1 moves -> rh_l2 follows with -1 gear ratio -->
-    <joint joint1="rh_r1" joint2="rh_l2" polycoef="0 1 0 0 0"/>
+    <joint joint1="rh_l2" joint2="rh_r1" polycoef="0 1 0 0 0"/>
   </equality>
 
   <keyframe>

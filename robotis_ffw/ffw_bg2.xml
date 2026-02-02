@@ -374,13 +374,13 @@
 
   <equality>
     <!-- Left gripper mimic -->
-    <joint joint1="gripper_l_joint1" joint2="gripper_l_joint2" polycoef="0 -1 0 0 0"/>
-    <joint joint1="gripper_l_joint1" joint2="gripper_l_joint3" polycoef="0 -1 0 0 0"/>
-    <joint joint1="gripper_l_joint1" joint2="gripper_l_joint4" polycoef="0 1 0 0 0"/>
+    <joint joint1="gripper_l_joint2" joint2="gripper_l_joint1" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_l_joint3" joint2="gripper_l_joint1" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_l_joint4" joint2="gripper_l_joint1" polycoef="0 1 0 0 0"/>
     <!-- Right gripper mimic -->
-    <joint joint1="gripper_r_joint1" joint2="gripper_r_joint2" polycoef="0 -1 0 0 0"/>
-    <joint joint1="gripper_r_joint1" joint2="gripper_r_joint3" polycoef="0 -1 0 0 0"/>
-    <joint joint1="gripper_r_joint1" joint2="gripper_r_joint4" polycoef="0 1 0 0 0"/>
+    <joint joint1="gripper_r_joint2" joint2="gripper_r_joint1" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_r_joint3" joint2="gripper_r_joint1" polycoef="0 -1 0 0 0"/>
+    <joint joint1="gripper_r_joint4" joint2="gripper_r_joint1" polycoef="0 1 0 0 0"/>
   </equality>
 
 </mujoco>

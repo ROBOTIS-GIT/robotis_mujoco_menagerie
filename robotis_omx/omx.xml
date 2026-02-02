@@ -124,7 +124,7 @@
   </contact>
 
   <equality>
-    <joint joint1="Gripper" joint2="Gripper_mimic" polycoef="0 -1 0 0 0"/>
+    <joint joint1="Gripper_mimic" joint2="Gripper" polycoef="0 -1 0 0 0"/>
   </equality>
 
   <keyframe>

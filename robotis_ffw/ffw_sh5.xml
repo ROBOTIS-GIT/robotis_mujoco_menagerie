@@ -152,32 +152,47 @@
     <default class="finger">
       <joint frictionloss="0.05" armature="0.05" damping="1.0"/>
       <position kp="20" dampratio="1" forcerange="-2.0 2.0"/>
-      <!-- Thumb joints -->
-      <default class="thumb_mcp">
-        <joint axis="1 0 0" range="-1.57 1.57"/>
+      <!-- Left Thumb joints -->
+      <default class="thumb_l_cmc">
+        <joint axis="1 0 0" range="-1.5708 1.5708"/>
       </default>
-      <default class="thumb_mcp2">
-        <joint axis="0 0 1" range="-3.14 3.14"/>
+      <default class="thumb_l_mcp_yaw">
+        <joint axis="0 0 1" range="0 3.1416"/>
       </default>
-      <default class="thumb_ip">
-        <joint axis="1 0 0" range="-1.57 1.57"/>
+      <default class="thumb_l_mcp_pitch">
+        <joint axis="1 0 0" range="-1.5708 0"/>
       </default>
-      <default class="thumb_tip">
-        <joint axis="1 0 0" range="-1.57 1.57"/>
+      <default class="thumb_l_ip">
+        <joint axis="1 0 0" range="-1.5708 0"/>
       </default>
-      <!-- Finger MCP (spread) -->
+      <!-- Right Thumb joints -->
+      <default class="thumb_r_cmc">
+        <joint axis="1 0 0" range="-1.5708 1.5708"/>
+      </default>
+      <default class="thumb_r_mcp_yaw">
+        <joint axis="0 0 1" range="-3.1416 0"/>
+      </default>
+      <default class="thumb_r_mcp_pitch">
+        <joint axis="1 0 0" range="0 1.5708"/>
+      </default>
+      <default class="thumb_r_ip">
+        <joint axis="1 0 0" range="0 1.5708"/>
+      </default>
+      <!-- Finger MCP Roll (spread) -->
       <default class="finger_mcp">
-        <joint axis="1 0 0" range="-0.6 0.6"/>
+        <joint axis="1 0 0" range="-0.6109 0.6109"/>
       </default>
-      <!-- Finger PIP/DIP/TIP (flex) -->
+      <!-- Finger MCP Pitch (flex) -->
       <default class="finger_pip">
-        <joint axis="0 1 0" range="0 2.0"/>
+        <joint axis="0 1 0" range="0 2.0071"/>
       </default>
+      <!-- Finger PIP -->
       <default class="finger_dip">
-        <joint axis="0 1 0" range="0 1.57"/>
+        <joint axis="0 1 0" range="0 1.5708"/>
       </default>
+      <!-- Finger DIP -->
       <default class="finger_tip">
-        <joint axis="0 1 0" range="0 1.57"/>
+        <joint axis="0 1 0" range="0 1.5708"/>
       </default>
     </default>
     <!-- Visual / Collision -->
@@ -314,22 +329,22 @@
                           <!-- Thumb (4 joints) -->
                           <body name="finger_l_link1" pos="-0.0125 -0.03493 0.04475">
                             <inertial pos="0.0238075 -0.00138644 -1.72456e-05" mass="0.0408685" diaginertia="2.88272e-06 9.39968e-06 9.68571e-06"/>
-                            <joint name="finger_l_joint1" class="thumb_mcp"/>
+                            <joint name="finger_l_joint1" class="thumb_l_cmc"/>
                             <geom type="mesh" mesh="hx5_l_thumb_mcp" material="black" class="visual"/>
                             <geom type="mesh" mesh="hx5_l_thumb_mcp" class="collision"/>
                             <body name="finger_l_link2" pos="0.039 0 0">
                               <inertial pos="0.000356679 -0.0139993 0.000359207" mass="0.0117606" diaginertia="1.30235e-06 1.05564e-06 1.30247e-06"/>
-                              <joint name="finger_l_joint2" class="thumb_mcp2"/>
+                              <joint name="finger_l_joint2" class="thumb_l_mcp_yaw"/>
                               <geom type="mesh" mesh="hx5_l_thumb_mcp2" material="black" class="visual"/>
                               <geom type="mesh" mesh="hx5_l_thumb_mcp2" class="collision"/>
                               <body name="finger_l_link3" pos="0 -0.028 0">
                                 <inertial pos="0.000101462 -0.0113435 4.08056e-06" mass="0.034690" diaginertia="5.03702e-06 2.25807e-06 5.40298e-06"/>
-                                <joint name="finger_l_joint3" class="thumb_ip"/>
+                                <joint name="finger_l_joint3" class="thumb_l_mcp_pitch"/>
                                 <geom type="mesh" mesh="hx5_l_thumb_ip" material="black" class="visual"/>
                                 <geom type="mesh" mesh="hx5_l_thumb_ip" class="collision"/>
                                 <body name="finger_l_link4" pos="0 -0.0355 0">
                                   <inertial pos="-1.79389e-05 -0.0168391 0.000236024" mass="0.043781" diaginertia="1.12255e-05 2.79566e-06 1.1393e-05"/>
-                                  <joint name="finger_l_joint4" class="thumb_tip"/>
+                                  <joint name="finger_l_joint4" class="thumb_l_ip"/>
                                   <geom type="mesh" mesh="hx5_l_thumb_tip" material="black" class="visual"/>
                                   <geom type="mesh" mesh="hx5_l_thumb_tip" class="collision"/>
                                 </body>
@@ -502,22 +517,22 @@
                           <!-- Thumb (4 joints) -->
                           <body name="finger_r_link1" pos="-0.0125 0.03493 0.04475">
                             <inertial pos="0.0238075 0.00131524 0.000460355" mass="0.0408685" diaginertia="2.88193e-06 9.43334e-06 9.65126e-06"/>
-                            <joint name="finger_r_joint1" class="thumb_mcp"/>
+                            <joint name="finger_r_joint1" class="thumb_r_cmc"/>
                             <geom type="mesh" mesh="hx5_r_thumb_mcp" material="black" class="visual"/>
                             <geom type="mesh" mesh="hx5_r_thumb_mcp" class="collision"/>
                             <body name="finger_r_link2" pos="0.039 0 0">
                               <inertial pos="-0.000356679 0.0139993 0.000359207" mass="0.0117606" diaginertia="1.30235e-06 1.05564e-06 1.30247e-06"/>
-                              <joint name="finger_r_joint2" class="thumb_mcp2"/>
+                              <joint name="finger_r_joint2" class="thumb_r_mcp_yaw"/>
                               <geom type="mesh" mesh="hx5_r_thumb_mcp2" material="black" class="visual"/>
                               <geom type="mesh" mesh="hx5_r_thumb_mcp2" class="collision"/>
                               <body name="finger_r_link3" pos="0 0.028 0">
                                 <inertial pos="-0.000101462 0.0113435 4.08056e-06" mass="0.034690" diaginertia="5.03702e-06 2.25807e-06 5.40298e-06"/>
-                                <joint name="finger_r_joint3" class="thumb_ip"/>
+                                <joint name="finger_r_joint3" class="thumb_r_mcp_pitch"/>
                                 <geom type="mesh" mesh="hx5_r_thumb_ip" material="black" class="visual"/>
                                 <geom type="mesh" mesh="hx5_r_thumb_ip" class="collision"/>
                                 <body name="finger_r_link4" pos="0 0.0355 0">
                                   <inertial pos="6.66050e-05 0.0168245 0.000223985" mass="0.043875" diaginertia="1.11607e-05 2.80794e-06 1.13431e-05"/>
-                                  <joint name="finger_r_joint4" class="thumb_tip"/>
+                                  <joint name="finger_r_joint4" class="thumb_r_ip"/>
                                   <geom type="mesh" mesh="hx5_r_thumb_tip" material="black" class="visual"/>
                                   <geom type="mesh" mesh="hx5_r_thumb_tip" class="collision"/>
                                 </body>
@@ -664,10 +679,10 @@
     <position class="arm_l_joint6" name="arm_l_joint6" joint="arm_l_joint6" inheritrange="1"/>
     <position class="arm_l_joint7" name="arm_l_joint7" joint="arm_l_joint7" inheritrange="1"/>
     <!-- Left hand fingers -->
-    <position class="thumb_mcp" name="finger_l_joint1" joint="finger_l_joint1" inheritrange="1"/>
-    <position class="thumb_mcp2" name="finger_l_joint2" joint="finger_l_joint2" inheritrange="1"/>
-    <position class="thumb_ip" name="finger_l_joint3" joint="finger_l_joint3" inheritrange="1"/>
-    <position class="thumb_tip" name="finger_l_joint4" joint="finger_l_joint4" inheritrange="1"/>
+    <position class="thumb_l_cmc" name="finger_l_joint1" joint="finger_l_joint1" inheritrange="1"/>
+    <position class="thumb_l_mcp_yaw" name="finger_l_joint2" joint="finger_l_joint2" inheritrange="1"/>
+    <position class="thumb_l_mcp_pitch" name="finger_l_joint3" joint="finger_l_joint3" inheritrange="1"/>
+    <position class="thumb_l_ip" name="finger_l_joint4" joint="finger_l_joint4" inheritrange="1"/>
     <position class="finger_mcp" name="finger_l_joint5" joint="finger_l_joint5" inheritrange="1"/>
     <position class="finger_pip" name="finger_l_joint6" joint="finger_l_joint6" inheritrange="1"/>
     <position class="finger_dip" name="finger_l_joint7" joint="finger_l_joint7" inheritrange="1"/>
@@ -693,10 +708,10 @@
     <position class="arm_r_joint6" name="arm_r_joint6" joint="arm_r_joint6" inheritrange="1"/>
     <position class="arm_r_joint7" name="arm_r_joint7" joint="arm_r_joint7" inheritrange="1"/>
     <!-- Right hand fingers -->
-    <position class="thumb_mcp" name="finger_r_joint1" joint="finger_r_joint1" inheritrange="1"/>
-    <position class="thumb_mcp2" name="finger_r_joint2" joint="finger_r_joint2" inheritrange="1"/>
-    <position class="thumb_ip" name="finger_r_joint3" joint="finger_r_joint3" inheritrange="1"/>
-    <position class="thumb_tip" name="finger_r_joint4" joint="finger_r_joint4" inheritrange="1"/>
+    <position class="thumb_r_cmc" name="finger_r_joint1" joint="finger_r_joint1" inheritrange="1"/>
+    <position class="thumb_r_mcp_yaw" name="finger_r_joint2" joint="finger_r_joint2" inheritrange="1"/>
+    <position class="thumb_r_mcp_pitch" name="finger_r_joint3" joint="finger_r_joint3" inheritrange="1"/>
+    <position class="thumb_r_ip" name="finger_r_joint4" joint="finger_r_joint4" inheritrange="1"/>
     <position class="finger_mcp" name="finger_r_joint5" joint="finger_r_joint5" inheritrange="1"/>
     <position class="finger_pip" name="finger_r_joint6" joint="finger_r_joint6" inheritrange="1"/>
     <position class="finger_dip" name="finger_r_joint7" joint="finger_r_joint7" inheritrange="1"/>

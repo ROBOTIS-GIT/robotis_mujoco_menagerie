@@ -1,6 +1,13 @@
 # robotis_mujoco_menagerie
 A collection of models for the MuJoCo physics engine from ROBOTIS
 
+## AI Sapiens K1
+
+The [AI Sapiens K1](./robotis_ai_sapiens_k1) humanoid model includes a
+standalone MJCF scene and the required STL meshes.
+
+<img src="./robotis_ai_sapiens_k1/k1.png" width="300">
+
 ## AI Worker (FFW-SH5)
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw_sh5.png" width="300">
 

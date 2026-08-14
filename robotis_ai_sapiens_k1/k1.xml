@@ -1,6 +1,6 @@
 <mujoco model="k1">
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
-  <option timestep="0.002" integrator="implicitfast" solver="Newton"/>
+  <option integrator="implicitfast" solver="Newton"/>
   <default>
     <joint damping="0" armature="0" frictionloss="0"/>
     <!-- Visual / Collision -->

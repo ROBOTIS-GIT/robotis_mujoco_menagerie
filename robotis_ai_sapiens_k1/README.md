@@ -17,7 +17,7 @@ humanoid robot and its STL meshes.
 3. Loaded the URDF into MuJoCo and saved the corresponding MJCF.
 4. Added a free joint and an IMU site to the pelvis.
 5. Added motor actuators with torque limits and armature values from the actuator specifications.
-6. Switched to the `implicitfast` integrator with a `0.002` s timestep.
+6. Set the integrator to `implicitfast`.
 7. Added orientation, gyroscope, and accelerometer sensors for the IMU.
 8. Added a home keyframe.
 9. Added `scene.xml` with the ground plane, lighting, skybox, and haze.

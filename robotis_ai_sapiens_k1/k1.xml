@@ -1,6 +1,6 @@
 <mujoco model="k1">
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
-  <option integrator="implicitfast" solver="Newton"/>
+  <option integrator="implicitfast"/>
   <default>
     <joint damping="0" armature="0" frictionloss="0"/>
     <!-- Visual / Collision -->
@@ -348,10 +348,6 @@
     <gyro name="imu_gyro" site="imu"/>
     <accelerometer name="imu_acc" site="imu"/>
   </sensor>
-  <custom>
-    <numeric name="qc060_max_speed_rad_s" data="20.943951"/>
-    <numeric name="qc080_max_speed_rad_s" data="11.519173"/>
-  </custom>
   <keyframe>
     <key name="home" qpos="0 0 0.7955 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
   </keyframe>

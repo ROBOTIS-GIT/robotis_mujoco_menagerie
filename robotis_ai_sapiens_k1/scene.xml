@@ -1,4 +1,4 @@
-<mujoco model="AI Sapiens K1 scene">
+<mujoco model="k1 scene">
   <include file="k1.xml"/>
 
   <visual>

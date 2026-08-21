@@ -1,6 +1,12 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for robotis_mujoco_menagerie
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.2.0 (2026-08-21)
+------------------
+* Added Model files for ROBOTIS Hand (HX5-D20)
+* Contributors: Hyungyu Kim
+
 1.1.0 (2026-02-02)
 ------------------
 * Added FFW-SH5 model (FFW-S base with HX5-D20 5-finger hand)

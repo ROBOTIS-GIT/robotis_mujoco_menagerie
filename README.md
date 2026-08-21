@@ -11,7 +11,7 @@ A collection of models for the MuJoCo physics engine from ROBOTIS
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_ffw/ffw_bg2.png" width="300">
 
 ## ROBOTIS Hand (HX5-D20)
-MuJoCo models generated from the ROBOTIS Hand rev2 left- and right-hand descriptions.
+<img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_hand/hands.png" width="300">
 
 ## OpenMANIPULATOR-Y
 <img src="https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_mujoco_menagerie/main/robotis_omy/omy.png" width="300">

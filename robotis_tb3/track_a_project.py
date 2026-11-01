@@ -17,6 +17,7 @@ from turtlebot_model import (load_scene, WheelIO, twist_to_wheel_rates,
 from track_a_estimation import PoseEKF, marker_measurement
 from track_a_navigation import OccupancyPlanner, StateFeedbackTracker
 from lqr.track_a_control import LQRPathTracker, ReferencePath
+from actuator_compensation import COMPENSATE_MODES, build_compensator, use_compensation, wheel_rates_for_twist
 from track_a_sensors import build_room, Lidar, CalibratedMarkerCamera, evaluation_pose, evaluation_collision, WIDTH, HEIGHT
 
 
@@ -37,6 +38,7 @@ def run(args):
     tracker=(LQRPathTracker(args.lqr_r_scale,rotate_enter=args.lqr_rotate_enter,recovery=args.recovery)
              if args.controller=='lqr' else StateFeedbackTracker(recovery=args.recovery))
     reference=ReferencePath(planner)
+    compensator=build_compensator(spec)    # used only when --compensate is not 'off'
     detector=CalibratedMarkerCamera()
     previous=wheels.read_angles()
     records=[]
@@ -47,7 +49,7 @@ def run(args):
     here=Path(__file__).resolve().parent
     sources=[Path(__file__).resolve(), *(here/name for name in
              ('track_a_sensors.py','track_a_estimation.py','track_a_navigation.py',
-              'lqr/__init__.py','lqr/track_a_control.py','lqr/track_a_control_design.py',
+              'lqr/__init__.py','lqr/track_a_control.py','lqr/track_a_control_design.py','actuator_compensation.py',
               'turtlebot_model.py','camera_navigation.py','turtlebot3_waffle_pi.xml'))]
     manifest={}
     for source in sources:
@@ -98,7 +100,15 @@ def run(args):
                     # Reference is latched in the EKF frame; the controller sees estimates only.
                     tracker.reference=reference.update(ekf.pose[:2],path,tracker.goal)
                 speed,turn,status=tracker.command(ekf.pose,path,lidar.angles,scan,corrected)
-                rates=wheels.set_rates(*twist_to_wheel_rates(speed,turn,spec))
+                compensated=use_compensation(args.compensate,tracker.docking)
+                if compensated:
+                    # Wheel commands from the desired twist plus the identified friction offset.
+                    # Encoder rates are the only feedback (unused by the recommended feedforward-only compensator).
+                    speed_applied=wheel_rates_for_twist(speed,turn,compensator.model)[1]
+                    rates=wheels.set_rates(*compensator.command(speed,turn,increments/.1))
+                else:
+                    speed_applied=speed
+                    rates=wheels.set_rates(*twist_to_wheel_rates(speed,turn,spec))
                 # Evaluation only. These values are logged after control computation.
                 truth=evaluation_pose(model,data)
                 error=ekf.pose-truth
@@ -115,6 +125,7 @@ def run(args):
                         'camera_measurement':None if observation is None else observation.tolist(),'camera_accepted':bool(corrected),
                         'wheel_commands':rates.tolist(),'status':status,
                         'speed_cmd':float(speed),'turn_cmd':float(turn),'track':track,
+                        'speed_applied':float(speed_applied),'compensated':bool(compensated),
                         'reference_adoptions':reference.adoptions,
                         'reference':([pt.tolist() for pt in reference.points] if reference.adoptions!=logged_adoptions else None),
                         'nis':ekf.last_nis if corrected else None,
@@ -163,8 +174,16 @@ def run(args):
                           'xte_rms_driving_m':float(np.sqrt(np.mean([r['track']['e_y_truth']**2 for r in tracked if r['speed_cmd']>0] or [np.nan]))),
                           'saturated_fraction':float(np.mean([abs(r['turn_cmd'])>=.799 for r in tracked])),
                           'reference_adoptions':reference.adoptions}
+                # Delivered forward speed while driving. Truth speed is EVALUATION ONLY (consecutive true poses).
+                driving=[i for i,r in enumerate(records[:-1]) if r['status'].startswith('LIDAR PATH') and r['speed_cmd']>0]
+                if driving:
+                    tracking['mean_driving_speed_cmd_mps']=float(np.mean([records[i]['speed_cmd'] for i in driving]))
+                    tracking['mean_driving_speed_applied_mps']=float(np.mean([records[i]['speed_applied'] for i in driving]))
+                    tracking['mean_driving_speed_truth_mps']=float(np.mean(
+                        [np.linalg.norm(np.array(records[i+1]['truth'][:2])-np.array(records[i]['truth'][:2]))/.1 for i in driving]))
             else:
                 tracking={'controller':args.controller,'tracking_seconds':0.0}
+            tracking['compensate']=args.compensate
             tracking['no_path_frames']=tracker.no_path_frames      # planner returned no route
             tracking['search_frames']=tracker.search_frames        # recovery search turns (0 unless --recovery)
             result={'arrived':bool(tracker.arrived),'collision':bool(collided),
@@ -211,6 +230,8 @@ def parser():
     p.add_argument('--controller',choices=('heuristic','lqr'),default='heuristic')
     p.add_argument('--lqr-r-scale',type=float,default=1,help='multiplies LQR R (larger = gentler turning)')
     p.add_argument('--lqr-rotate-enter',type=float,default=.40,help='|e_theta| [rad] above which the LQR tracker rotates in place')
+    p.add_argument('--compensate',choices=COMPENSATE_MODES,default='off',
+                   help="actuator friction/gain compensation: off (original mapping), path (not while docking), all")
     p.add_argument('--recovery',action='store_true',help='when the planner has no route for 1 s, rotate to search for the marker')
     return p
 

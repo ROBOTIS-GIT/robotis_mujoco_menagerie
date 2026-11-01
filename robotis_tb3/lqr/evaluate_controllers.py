@@ -6,6 +6,9 @@ A controller spec is  heuristic | lqr  with optional modifiers, in this order:
   lqr@<rotate>       rotate-in-place threshold [rad] (default 0.40)        e.g. lqr@0.6
   <spec>+recovery    rotate to search for the marker when the planner has no route for 1 s
                      e.g. heuristic+recovery, lqr:2@0.6+recovery
+  <spec>+comp        actuator compensation (friction offset, measured gains, yaw-priority speed limit)
+                     on path following and search; docking keeps the original mapping.  e.g. lqr+comp
+  <spec>+compall     the same, docking included.  Always the LAST modifier: lqr+recovery+comp
 
 The same spec list covers every study:
 
@@ -16,6 +19,8 @@ The same spec list covers every study:
                   --conditions nominal slippery_floor --trials 10 --output eval_rotate
   recovery    python robotis_tb3/lqr/evaluate_controllers.py --controllers heuristic heuristic+recovery \\
                   --conditions shifted_obstacle --trials 10 --output eval_recovery
+  compensate  python robotis_tb3/lqr/evaluate_controllers.py --controllers lqr lqr+comp lqr+compall \\
+                  --conditions nominal shifted_obstacle --trials 10 --output eval_comp
 
 Layout: <output>/<tag>/<condition>/seed-<n>/result.json (+ trace). summary.json is rewritten
 after every trial; a trial whose result.json already exists is loaded, not re-run, so an
@@ -61,18 +66,38 @@ def parse_spec(spec):
     return name, r, tag, rot, recovery
 
 
+COMP = re.compile(r'\+comp(all)?$')
+
+
+def split_comp(spec):
+    """'lqr+recovery+comp' -> ('lqr+recovery', 'path');  '...+compall' -> (..., 'all');  else (spec, 'off').
+
+    Kept apart from parse_spec so the tags and cached trials of every earlier spec are unchanged."""
+    m = COMP.search(spec)
+    if not m:
+        return spec, 'off'
+    return spec[:m.start()], ('all' if m.group(1) else 'path')
+
+
+def parse_full_spec(spec):
+    """(name, r_scale, tag, rotate_enter, recovery, compensate); the tag gains _comp / _compall."""
+    base, comp = split_comp(spec)
+    name, r, tag, rot, recovery = parse_spec(base)
+    return name, r, tag + {'off': '', 'path': '_comp', 'all': '_compall'}[comp], rot, recovery, comp
+
+
 def main():
     p = parser()
     p.add_argument('--trials', type=int, default=10, help='Seeds per controller and condition')
     p.add_argument('--controllers', nargs='+', default=['heuristic', 'lqr'])
     p.add_argument('--conditions', nargs='+', default=list(CONDITIONS), choices=list(CONDITIONS))
     args = p.parse_args()
-    specs = [parse_spec(s) for s in args.controllers]
+    specs = [parse_full_spec(s) for s in args.controllers]
     root = Path(args.output).resolve()
     root.mkdir(parents=True, exist_ok=True)
     summary_path = root / 'summary.json'
     results = []
-    for name, r_scale, tag, rotate, recovery in specs:
+    for name, r_scale, tag, rotate, recovery, comp in specs:
         for condition in args.conditions:
             for seed in range(args.trials):
                 out = root / tag / condition / f'seed-{seed}'
@@ -89,11 +114,12 @@ def main():
                     trial.lqr_r_scale = r_scale
                     trial.lqr_rotate_enter = rotate
                     trial.recovery = recovery
+                    trial.compensate = comp
                     for key, value in CONDITIONS[condition].items():
                         setattr(trial, key, value)
                     result = run(trial)
                 result.update(condition=condition, controller_tag=tag, controller_name=name,
-                              lqr_r_scale=r_scale, lqr_rotate_enter=rotate, recovery=recovery, seed=seed)
+                              lqr_r_scale=r_scale, lqr_rotate_enter=rotate, recovery=recovery, compensate=comp, seed=seed)
                 results.append(result)
                 summary_path.write_text(json.dumps(results, indent=2) + '\n')
     n_ok = sum(r['success'] for r in results)

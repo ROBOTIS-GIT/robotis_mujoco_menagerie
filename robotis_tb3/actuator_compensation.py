@@ -100,3 +100,25 @@ class WheelCompensator:
                                        -self.trim_limit, self.trim_limit)
             cmd[i] = want[i] + np.sign(want[i]) * (self.model.c_ff + self.trim[i])
         return np.clip(cmd, -self.model.cmd_limit, self.model.cmd_limit)
+
+
+# ---- integration helpers (used by track_a_project.py) ---------------------------------
+COMPENSATE_MODES = ('off', 'path', 'all')
+
+
+def use_compensation(mode, docking):
+    """Whether this frame's command goes through the compensator.
+
+    off  : never (the original twist_to_wheel_rates mapping; all earlier results)
+    path : path following and no-path search only; the docking relay keeps the original
+           mapping, because its speeds and relay turn were tuned on the weak plant
+    all  : every frame, docking included"""
+    if mode not in COMPENSATE_MODES:
+        raise ValueError(f'compensate mode must be one of {COMPENSATE_MODES}, got {mode!r}')
+    return mode == 'all' or (mode == 'path' and not docking)
+
+
+def build_compensator(spec, dt=0.1):
+    """Recommended compensator (feedforward only), limited to the scene's wheel-rate limit."""
+    return WheelCompensator(ActuatorModel(cmd_limit=float(spec.max_wheel_rate_rad_s)), dt=dt, use_trim=False)
+

@@ -100,7 +100,7 @@ def failures(results):
 def sweep_table(results):
     out = ['| tag | R scale | condition | success | XTE RMS driving [cm] | driving ∫w² | total ∫w² | rotate [s] | time [s] |', '|---|---|---|---|---|---|---|---|---|']
     plain = [r for r in results if r['controller_name'] == 'lqr' and not r.get('recovery')
-             and abs(r.get('lqr_rotate_enter', .4) - .4) < 1e-9]
+             and r.get('compensate', 'off') == 'off' and abs(r.get('lqr_rotate_enter', .4) - .4) < 1e-9]
     for cond in CONDITIONS:
         for scale in sorted({r['lqr_r_scale'] for r in plain}):
             rs = [r for r in plain if r['condition'] == cond and r['lqr_r_scale'] == scale]
@@ -118,6 +118,7 @@ def main():
     ap.add_argument('summary')
     ap.add_argument('--sweep', action='store_true', help='R-sweep table instead of the controller comparison')
     ap.add_argument('--recovery', action='store_true', help='compare heuristic vs heuristic_recovery (and lqr vs lqr_recovery)')
+    ap.add_argument('--comp', action='store_true', help='compare each controller with its _comp and _compall variants')
     a = ap.parse_args()
     results = json.loads(Path(a.summary).read_text())
     tags = sorted({r['controller_tag'] for r in results}, key=tag_order)
@@ -129,6 +130,12 @@ def main():
             if base in tags and f'{base}_recovery' in tags:
                 print(f'### {base} vs {base}_recovery\n')
                 print(comparison_table(results, base, f'{base}_recovery'))
+    elif a.comp:
+        for base in ('heuristic', 'lqr'):
+            for suffix in ('_comp', '_compall'):
+                if base in tags and f'{base}{suffix}' in tags:
+                    print(f'### {base} vs {base}{suffix}\n')
+                    print(comparison_table(results, base, f'{base}{suffix}'))
     else:
         print('### Controller comparison\n')
         print(comparison_table(results))

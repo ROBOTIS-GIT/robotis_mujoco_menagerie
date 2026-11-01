@@ -49,7 +49,7 @@ def comparison_pairs(tags):
         if t in ('heuristic', 'lqr'):
             continue
         base = 'heuristic' if t.startswith('heuristic') else 'lqr'
-        if base in tags and ('_rot' in t or t.endswith('_recovery') or t.startswith('lqr_r')):
+        if base in tags and ('_rot' in t or t.endswith(('_recovery', '_comp', '_compall')) or t.startswith('lqr_r')):
             pairs.append((base, t))
     return pairs
 
@@ -187,7 +187,7 @@ def plots(results, out, successes_only=True):
     plt.close(fig)
 
     def plain(r):
-        return (r['controller_name'] == 'lqr' and not r.get('recovery')
+        return (r['controller_name'] == 'lqr' and not r.get('recovery') and r.get('compensate', 'off') == 'off'
                 and abs(r.get('lqr_rotate_enter', .4) - .4) < 1e-9)
     sweep = sorted({r['lqr_r_scale'] for r in results if plain(r)})
     if len(sweep) < 3:

@@ -16,6 +16,7 @@ from turtlebot_model import (load_scene, WheelIO, twist_to_wheel_rates,
                             step_pose_from_encoder, wrap_angle)
 from track_a_estimation import PoseEKF, marker_measurement
 from track_a_navigation import OccupancyPlanner, StateFeedbackTracker
+from lqr.track_a_control import LQRPathTracker, ReferencePath
 from track_a_sensors import build_room, Lidar, CalibratedMarkerCamera, evaluation_pose, evaluation_collision, WIDTH, HEIGHT
 
 
@@ -33,7 +34,9 @@ def run(args):
     odometry=initial.copy()
     lidar=Lidar(model)
     planner=OccupancyPlanner()
-    tracker=StateFeedbackTracker()
+    tracker=(LQRPathTracker(args.lqr_r_scale,rotate_enter=args.lqr_rotate_enter,recovery=args.recovery)
+             if args.controller=='lqr' else StateFeedbackTracker(recovery=args.recovery))
+    reference=ReferencePath(planner)
     detector=CalibratedMarkerCamera()
     previous=wheels.read_angles()
     records=[]
@@ -41,13 +44,17 @@ def run(args):
     output.mkdir(parents=True,exist_ok=True)
     source_dir=output/'source-snapshot'
     source_dir.mkdir(exist_ok=True)
-    sources=[Path(__file__), *(Path(__file__).parent/name for name in
+    here=Path(__file__).resolve().parent
+    sources=[Path(__file__).resolve(), *(here/name for name in
              ('track_a_sensors.py','track_a_estimation.py','track_a_navigation.py',
+              'lqr/__init__.py','lqr/track_a_control.py','lqr/track_a_control_design.py',
               'turtlebot_model.py','camera_navigation.py','turtlebot3_waffle_pi.xml'))]
     manifest={}
     for source in sources:
-        shutil.copy2(source,source_dir/source.name)
-        manifest[source.name]=hashlib.sha256(source.read_bytes()).hexdigest()
+        rel=source.relative_to(here)             # keeps the lqr/ subfolder in the snapshot
+        (source_dir/rel).parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(source,source_dir/rel)
+        manifest[rel.as_posix()]=hashlib.sha256(source.read_bytes()).hexdigest()
     (output/'source-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     viewer=None
     quit_event=Event()
@@ -60,6 +67,7 @@ def run(args):
         viewer.cam.elevation=-60
     collided=False
     status='STARTING'
+    logged_adoptions=0      # the reference polyline is logged only when it changes (keeps traces small)
     render_options=mujoco.MjvOption()
     render_options.geomgroup[:]=1
     if viewer is not None:
@@ -86,21 +94,34 @@ def run(args):
                 scan=lidar.read(model,data,rng,args.lidar_noise)
                 planner.update(ekf.pose,lidar.angles,scan)
                 path=planner.plan(ekf.pose[:2],tracker.goal)
+                if not tracker.docking:
+                    # Reference is latched in the EKF frame; the controller sees estimates only.
+                    tracker.reference=reference.update(ekf.pose[:2],path,tracker.goal)
                 speed,turn,status=tracker.command(ekf.pose,path,lidar.angles,scan,corrected)
                 rates=wheels.set_rates(*twist_to_wheel_rates(speed,turn,spec))
                 # Evaluation only. These values are logged after control computation.
                 truth=evaluation_pose(model,data)
                 error=ekf.pose-truth
                 error[2]=wrap_angle(error[2])
+                track=None
+                if not tracker.docking and len(reference.points)>=2:
+                    _,_,ey_t,eth_t=reference.project(truth)      # truth: evaluation only
+                    _,_,ey_e,eth_e=reference.project(ekf.pose)   # what the controller sees
+                    track={'e_y_truth':float(ey_t),'e_theta_truth':float(eth_t),
+                           'e_y_est':float(ey_e),'e_theta_est':float(eth_e)}
                 record={'time_s':frame*.1,'estimate':ekf.pose.tolist(),'truth':truth.tolist(),
                         'odometry':odometry.tolist(),'covariance':ekf.P.tolist(),
                         'encoder_increments':increments.tolist(),
                         'camera_measurement':None if observation is None else observation.tolist(),'camera_accepted':bool(corrected),
                         'wheel_commands':rates.tolist(),'status':status,
+                        'speed_cmd':float(speed),'turn_cmd':float(turn),'track':track,
+                        'reference_adoptions':reference.adoptions,
+                        'reference':([pt.tolist() for pt in reference.points] if reference.adoptions!=logged_adoptions else None),
                         'nis':ekf.last_nis if corrected else None,
                         'nees':float(error@np.linalg.solve(ekf.P,error)),
                         'path':np.asarray(path).tolist()}
                 records.append(record)
+                logged_adoptions=reference.adoptions
                 if frame%50==0 or tracker.arrived:
                     print(f'{frame*.1:5.1f}s {status} estimate={ekf.pose.round(3)} camera={corrected}',flush=True)
                 if frame==0:
@@ -126,6 +147,26 @@ def run(args):
             final_range=marker_measurement(truth)[0]
             errors=np.array([np.array(r['estimate'])-r['truth'] for r in records])
             odo_errors=np.array([np.array(r['odometry'])-r['truth'] for r in records])
+            tracked=[r for r in records if r['track'] is not None and r['status'].startswith('LIDAR PATH')]
+            if tracked:
+                ey_t=np.array([r['track']['e_y_truth'] for r in tracked])
+                ey_e=np.array([r['track']['e_y_est'] for r in tracked])
+                tracking={'controller':args.controller,'tracking_seconds':len(tracked)*.1,
+                          'xte_rms_truth_m':float(np.sqrt(np.mean(ey_t**2))),
+                          'xte_max_truth_m':float(np.max(np.abs(ey_t))),
+                          'xte_rms_est_m':float(np.sqrt(np.mean(ey_e**2))),
+                          'xte_est_minus_truth_rms_m':float(np.sqrt(np.mean((ey_e-ey_t)**2))),
+                          'effort_w2':float(sum(r['turn_cmd']**2 for r in tracked)*.1),
+                          # Rotate-in-place spins (v=0) dominate effort; report driving separately.
+                          'effort_w2_driving':float(sum(r['turn_cmd']**2 for r in tracked if r['speed_cmd']>0)*.1),
+                          'rotate_seconds':float(sum(1 for r in tracked if r['speed_cmd']==0)*.1),
+                          'xte_rms_driving_m':float(np.sqrt(np.mean([r['track']['e_y_truth']**2 for r in tracked if r['speed_cmd']>0] or [np.nan]))),
+                          'saturated_fraction':float(np.mean([abs(r['turn_cmd'])>=.799 for r in tracked])),
+                          'reference_adoptions':reference.adoptions}
+            else:
+                tracking={'controller':args.controller,'tracking_seconds':0.0}
+            tracking['no_path_frames']=tracker.no_path_frames      # planner returned no route
+            tracking['search_frames']=tracker.search_frames        # recovery search turns (0 unless --recovery)
             result={'arrived':bool(tracker.arrived),'collision':bool(collided),
                     'success':bool(tracker.arrived and not collided and abs(final_range-.55)<.08 and abs(truth[1])<.08 and abs(truth[2])<.15),
                     'simulation_seconds':len(records)*.1,'seed':args.seed,
@@ -135,7 +176,7 @@ def run(args):
                     'final_lateral_error_truth_m':float(abs(truth[1])),
                     'final_heading_error_truth_deg':float(abs(np.rad2deg(truth[2]))),
                     'camera_updates':ekf.accepted,'camera_rejections':ekf.rejected,
-                    'mean_nees':float(np.mean([r['nees'] for r in records])),
+                    'mean_nees':float(np.mean([r['nees'] for r in records])),'tracking':tracking,
                     'parameters':vars(args),'final_status':status}
             np.save(output/'occupancy.npy',planner.occupied)
             (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
@@ -167,6 +208,10 @@ def parser():
     p.add_argument('--lidar-noise',type=float,default=.006)
     p.add_argument('--r-scale',type=float,default=1)
     p.add_argument('--q-scale',type=float,default=1)
+    p.add_argument('--controller',choices=('heuristic','lqr'),default='heuristic')
+    p.add_argument('--lqr-r-scale',type=float,default=1,help='multiplies LQR R (larger = gentler turning)')
+    p.add_argument('--lqr-rotate-enter',type=float,default=.40,help='|e_theta| [rad] above which the LQR tracker rotates in place')
+    p.add_argument('--recovery',action='store_true',help='when the planner has no route for 1 s, rotate to search for the marker')
     return p
 
 

@@ -27,3 +27,10 @@ and [uncertainty comparison](part-c/uncertainty-validation.png).
 
 These are small correlated simulation samples, not evidence of perfect tuning,
 hardware calibration, a guaranteed grade, or a finished assessment submission.
+
+## Part D
+
+`part-d/eval_cmp/` holds the 80-trial heuristic-versus-LQR comparison (`summary.json`, `controller_results.md`, `tracking_boxplot.png`);
+the tables in `PART_D_CONTROL.md` Section 4 are generated from that `summary.json` by `lqr/part_d_summary.py`. `part-d/tracking_lqr_nominal_seed0.png`
+is a single-trial figure from an earlier run. The actuator-identification and compensation files in `part-d/` are open-loop bench results,
+not closed-loop trials. Large per-trial traces were not committed.

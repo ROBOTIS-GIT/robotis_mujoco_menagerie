@@ -70,17 +70,61 @@ class OccupancyPlanner:
         return []
 
 
+RECOVERY_FRAMES = 10     # consecutive frames with no planner path before searching (1 s)
+SEARCH_TURN = 0.8        # rad/s; the relay value, below it the wheels barely move (actuator dead zone)
+
+
 class StateFeedbackTracker:
-    def __init__(self):
+    def __init__(self, recovery=False):
         self.arrival_count = 0
         self.arrived = False
         self.docking = False
         self.position_captured = False
         self.missed_camera_frames = 0
+        # Opt-in no-path recovery. Off by default so the baseline behaviour (and the
+        # recorded NO SAFE PATH failures) are unchanged.
+        self.recovery = recovery
+        self.no_path_run = 0         # current run of consecutive frames without a planner path
+        self.no_path_frames = 0      # total frames without a planner path (while not docking)
+        self.search_frames = 0       # frames spent in the recovery search turn
+        self._search_dir = 0.0
+
+    def _search(self, estimate):
+        """Rotate in place toward the ESTIMATED marker bearing to bring the marker into view.
+
+        A stationary robot gets no new camera measurement, so a stale heading estimate (which
+        tilts the LiDAR map and can close the route to the goal) can never be corrected.
+        Turning lets the camera reacquire the marker; the EKF then fixes the heading."""
+        bearing = marker_measurement(estimate)[1]
+        if abs(bearing) > .10:
+            self._search_dir = float(np.sign(bearing))
+        elif self._search_dir == 0.0:
+            self._search_dir = 1.0
+        self.search_frames += 1
+        return 0.0, self._search_dir * SEARCH_TURN, 'NO PATH - SEARCH FOR MARKER'
 
     @property
     def goal(self):
         return GOAL if self.docking else np.array([1.95, 0.0])
+
+    def follow_path(self, estimate, path):
+        """Baseline heuristic: pure-pursuit-style bearing law toward a point
+        20 cm along the A* path. Subclasses (LQR, Part D) override this."""
+        if not path:
+            return 0.0,0.0,'NO SAFE PATH - STOP'
+        target = path[-1]
+        # Follow a point 20 cm along the collision-inflated grid path.
+        for point in path:
+            if np.linalg.norm(point-estimate[:2])>.20:
+                target=point
+                break
+        delta=target-estimate[:2]
+        bearing=wrap_angle(np.arctan2(delta[1],delta[0])-estimate[2])
+        speed=.18*max(0.0,np.cos(bearing))
+        turn=np.clip(2.8*bearing,-.8,.8)
+        if abs(bearing)>.4:
+            speed=0.0
+        return float(speed),float(turn),'LIDAR PATH / EKF TRACK'
 
     def command(self, estimate, path, angles, ranges, camera_fresh):
         if self.arrived:
@@ -124,21 +168,12 @@ class StateFeedbackTracker:
                 speed=0.0
             status='EKF VISUAL DOCK'
         else:
-            if not path:
-                return 0.0,0.0,'NO SAFE PATH - STOP'
-            target = path[-1]
-            # Follow a point 20 cm along the collision-inflated grid path.
-            for point in path:
-                if np.linalg.norm(point-estimate[:2])>.20:
-                    target=point
-                    break
-            delta=target-estimate[:2]
-            bearing=wrap_angle(np.arctan2(delta[1],delta[0])-estimate[2])
-            speed=.18*max(0.0,np.cos(bearing))
-            turn=np.clip(2.8*bearing,-.8,.8)
-            if abs(bearing)>.4:
-                speed=0.0
-            status='LIDAR PATH / EKF TRACK'
+            self.no_path_run = 0 if path else self.no_path_run + 1
+            self.no_path_frames += 0 if path else 1
+            if self.recovery and self.no_path_run >= RECOVERY_FRAMES:
+                speed,turn,status=self._search(estimate)
+            else:
+                speed,turn,status=self.follow_path(estimate,path)
         # Independent body-frame LiDAR stop envelope; angles are sensor readings.
         forward = ranges[np.abs(angles)<.40]
         if speed>0 and np.min(forward)<.36:

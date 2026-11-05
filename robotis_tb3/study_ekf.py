@@ -1,7 +1,7 @@
 """Paired offline Q/R sensitivity study. Recorded robot trajectories stay fixed.
 Encoder increments in older logs are reconstructed from odometry only, never truth.
 This is an estimator replay study, not a closed-loop navigation success study.
-"""
+""" Okay,sohe's gota Read MefoPott D.<en-US> Where's thislocated?<en-US>It'slocatedinLQ off for somereason.<en-US>Is thismy ReadMe this looks likemy Read Me?<en-US> Yeah, okay,sohe didpull frommy thingit looks like and then continue off whatI wasdoingI just want to confirm that okayso which parts were you looking at that which parts were you looking at whichsections were you looking at?<en-US> No,no,asinasin the parts that we need to correct from hereon the part A project track A whichsections tellme tellme thefile namesholdon, letmesharescreen here tracka projectwhere isitRobotusTB threeare weusing these otherrobotics things by theway this FFWmaxmy op three we'reusing these other these rightso we can getrid of these let's just getrid of these for nowI don't believe they're beingused okaycoolsoI'mcurrentlyonmybranchI'mgoing to just continue offmybranch becauseI believeit's complete and justrequires the the video and thepipeline okayI deleted the otherroboticsfiles because weonly working with the Tp three turtle bot threeSimdo we want to justgo frommine andredo the video plus thepipeline then becauseI believemine was thefinalsetup if we're not touching what Ho's beendoing
 import argparse
 import csv
 import hashlib

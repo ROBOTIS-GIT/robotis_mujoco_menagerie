@@ -1,1 +1,28 @@
+cat > .gitignore <<'EOF'
 others/
+
+# Local runtime and generated experiment outputs
+.venv/
+__pycache__/
+*.pyc
+track-a-output/
+camera-navigation-output/
+candidate-nominal/
+candidate-noisy/
+part-c-replay-output/
+robotis_tb3/evidence/**/trace.json
+robotis_tb3/evidence/**/series.json
+
+# Part D trial output folders (raw, large). Anchored to the repo root so the committed
+# robotis_tb3/evidence/part-d/eval_cmp/ is NOT caught.
+/eval_*/
+/out_*/
+/*.log
+
+# Per-trial source copies
+source-snapshot/
+source-manifest.json
+
+# Windows download metadata
+*Zone.Identifier
+EOF

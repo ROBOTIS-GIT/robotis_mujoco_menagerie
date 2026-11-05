@@ -1,0 +1,13 @@
+TRACK A - LOCAL DEVELOPMENT EVALUATION
+
+Successes: 8/8
+
+nominal: 2/2 success; mean EKF position RMSE 0.057 m; encoder-only 0.463 m
+camera_noise_dropout: 2/2 success; mean EKF position RMSE 0.054 m; encoder-only 0.464 m
+shifted_obstacle: 2/2 success; mean EKF position RMSE 0.076 m; encoder-only 0.591 m
+slippery_floor: 2/2 success; mean EKF position RMSE 0.054 m; encoder-only 0.447 m
+
+These are small simulation samples, not a claimed grade or completed submission.
+See metrics.csv for coverage, sensor residuals, path error and control effort.
+Each trial includes parameters, a trace and a source snapshot with SHA-256 hashes.
+Remaining: team details, calibration evidence, defended tuning comparisons, final project page and five-minute video.

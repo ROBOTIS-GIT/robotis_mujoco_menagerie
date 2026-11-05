@@ -1,0 +1,29 @@
+{
+  "arrived": true,
+  "collision": false,
+  "success": true,
+  "simulation_seconds": 43.2,
+  "seed": 0,
+  "ekf_position_rmse_m": 0.05408925496528677,
+  "odometry_position_rmse_m": 0.44936324418837126,
+  "final_camera_distance_truth_m": 0.5795689517060888,
+  "final_lateral_error_truth_m": 0.023404617325403713,
+  "final_heading_error_truth_deg": 3.7041988165411284,
+  "camera_updates": 296,
+  "camera_rejections": 0,
+  "mean_nees": 5.120487812870605,
+  "parameters": {
+    "headless": true,
+    "output": "robotis_tb3/evidence/baseline/slippery_floor/seed-0",
+    "seconds": 65.0,
+    "seed": 0,
+    "obstacle_shift": 0,
+    "friction": 0.6,
+    "encoder_bias": 0.002,
+    "dropout": 0,
+    "pixel_noise": 0,
+    "lidar_noise": 0.006,
+    "r_scale": 1
+  },
+  "final_status": "ARRIVED"
+}

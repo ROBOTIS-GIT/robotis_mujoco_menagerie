@@ -1,0 +1,30 @@
+{
+  "arrived": true,
+  "collision": false,
+  "success": true,
+  "simulation_seconds": 49.7,
+  "seed": 2,
+  "ekf_position_rmse_m": 0.05070315037106384,
+  "odometry_position_rmse_m": 0.4929058826530338,
+  "final_camera_distance_truth_m": 0.5729594720668497,
+  "final_lateral_error_truth_m": 0.018482251200342303,
+  "final_heading_error_truth_deg": 3.570166507900557,
+  "camera_updates": 241,
+  "camera_rejections": 0,
+  "mean_nees": 0.7897504243051915,
+  "parameters": {
+    "headless": true,
+    "output": "robotis_tb3/evidence/part-c/closed-loop/noisy-seed-2",
+    "seconds": 65.0,
+    "seed": 2,
+    "obstacle_shift": 0,
+    "friction": 1,
+    "encoder_bias": 0.002,
+    "dropout": 0.3,
+    "pixel_noise": 5.0,
+    "lidar_noise": 0.006,
+    "r_scale": 1.0,
+    "q_scale": 10.0
+  },
+  "final_status": "ARRIVED"
+}

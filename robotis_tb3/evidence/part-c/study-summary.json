@@ -1,0 +1,109 @@
+{
+  "study_type": "Paired offline estimator replay plus two separate fresh closed-loop checks",
+  "configurations": 9,
+  "recordings": 8,
+  "estimator_replays": 72,
+  "development_recordings": 2,
+  "reserved_validation_recordings": 6,
+  "baseline_validation": {
+    "split": "validation",
+    "q_scale": 1.0,
+    "r_scale": 1.0,
+    "trials": 6,
+    "position_rmse_m": 0.061821541354483506,
+    "heading_rmse_deg": 3.671307977163554,
+    "mean_nees": 5.760653702643395,
+    "three_sigma_coverage": 0.9570348382932554,
+    "mean_attempted_nis": 0.56956372358093,
+    "accepted_updates": 288.3333333333333,
+    "rejected_updates": 0.0
+  },
+  "candidate_validation": {
+    "split": "validation",
+    "q_scale": 10.0,
+    "r_scale": 1.0,
+    "trials": 6,
+    "position_rmse_m": 0.05042427480230861,
+    "heading_rmse_deg": 2.5475818119989846,
+    "mean_nees": 0.9830139876035773,
+    "three_sigma_coverage": 0.997076988859097,
+    "mean_attempted_nis": 0.10691228856482582,
+    "accepted_updates": 288.3333333333333,
+    "rejected_updates": 0.0
+  },
+  "relative_validation_position_rmse_reduction_percent": 18.435752817651696,
+  "max_baseline_replay_state_difference": 1.2037537633347029e-11,
+  "fresh_candidate_closed_loop": [
+    {
+      "arrived": true,
+      "collision": false,
+      "success": true,
+      "simulation_seconds": 43.400000000000006,
+      "seed": 2,
+      "ekf_position_rmse_m": 0.04683397973392617,
+      "odometry_position_rmse_m": 0.5491280912017896,
+      "final_camera_distance_truth_m": 0.5719498438967461,
+      "final_lateral_error_truth_m": 0.018880845040035853,
+      "final_heading_error_truth_deg": 3.083454709369381,
+      "camera_updates": 295,
+      "camera_rejections": 0,
+      "mean_nees": 1.0205956763412771,
+      "parameters": {
+        "headless": true,
+        "output": "robotis_tb3/evidence/part-c",
+        "seconds": 65.0,
+        "seed": 2,
+        "obstacle_shift": 0,
+        "friction": 1,
+        "encoder_bias": 0.002,
+        "dropout": 0,
+        "pixel_noise": 0,
+        "lidar_noise": 0.006,
+        "r_scale": 1.0,
+        "q_scale": 10.0
+      },
+      "final_status": "ARRIVED"
+    },
+    {
+      "arrived": true,
+      "collision": false,
+      "success": true,
+      "simulation_seconds": 49.7,
+      "seed": 2,
+      "ekf_position_rmse_m": 0.05070315037106384,
+      "odometry_position_rmse_m": 0.4929058826530338,
+      "final_camera_distance_truth_m": 0.5729594720668497,
+      "final_lateral_error_truth_m": 0.018482251200342303,
+      "final_heading_error_truth_deg": 3.570166507900557,
+      "camera_updates": 241,
+      "camera_rejections": 0,
+      "mean_nees": 0.7897504243051915,
+      "parameters": {
+        "headless": true,
+        "output": "robotis_tb3/evidence/part-c",
+        "seconds": 65.0,
+        "seed": 2,
+        "obstacle_shift": 0,
+        "friction": 1,
+        "encoder_bias": 0.002,
+        "dropout": 0.3,
+        "pixel_noise": 5.0,
+        "lidar_noise": 0.006,
+        "r_scale": 1.0,
+        "q_scale": 10.0
+      },
+      "final_status": "ARRIVED"
+    }
+  ],
+  "regression_tests": {
+    "passed": 17,
+    "total": 17
+  },
+  "deployed_default": "Unchanged: Q x1, R x1; candidate Q x10,R x1 requires explicit --q-scale 10 flag",
+  "limitations": [
+    "Small correlated samples",
+    "Conservative candidate uncertainty",
+    "Known simulated camera parameters are not measured hardware calibration",
+    "Only two fresh candidate online trials; original baseline eight-run navigation evidence is separate"
+  ]
+}

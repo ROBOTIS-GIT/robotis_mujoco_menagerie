@@ -1,0 +1,63 @@
+{
+  "rule": "Development only: >=99% 3-sigma component coverage and mean NEES <=4; then lowest mean position RMSE. No formal consistency claim.",
+  "development_traces": [
+    "nominal/seed-0",
+    "camera_noise_dropout/seed-0"
+  ],
+  "selected": {
+    "split": "development",
+    "q_scale": 10.0,
+    "r_scale": 1.0,
+    "trials": 2,
+    "position_rmse_m": 0.04482208814850228,
+    "heading_rmse_deg": 2.5226774937457375,
+    "mean_nees": 0.8266100876837625,
+    "three_sigma_coverage": 0.9996168582375479,
+    "mean_attempted_nis": 0.11422228317906583,
+    "accepted_updates": 278.0,
+    "rejected_updates": 0.0
+  },
+  "baseline_equivalence_checks": [
+    {
+      "trace": "nominal/seed-0",
+      "max_absolute_state_difference": 5.676820125088966e-12,
+      "input_trace_sha256": "586f8f370af6a8c7613ad0be3d57f32eca6e5c2a689c68020b6b89828fe11ef6"
+    },
+    {
+      "trace": "nominal/seed-1",
+      "max_absolute_state_difference": 9.954259638789154e-12,
+      "input_trace_sha256": "78518fab87cec6272d09b323e6f96e38ef22ede6a861e1c468204dabdb916623"
+    },
+    {
+      "trace": "camera_noise_dropout/seed-0",
+      "max_absolute_state_difference": 1.2037537633347029e-11,
+      "input_trace_sha256": "6e710dc7898140181387e4fad3e2694b54c7856d417ee8fa18cf9b151e36e443"
+    },
+    {
+      "trace": "camera_noise_dropout/seed-1",
+      "max_absolute_state_difference": 3.4386243852324583e-12,
+      "input_trace_sha256": "330012d537d28d4883498918d2b1212ae3a348e044804e0cf20a2f3236785d04"
+    },
+    {
+      "trace": "shifted_obstacle/seed-0",
+      "max_absolute_state_difference": 4.8477610814501304e-12,
+      "input_trace_sha256": "5a27cf566c15da5a5f6eff03ca1b4ee40d37fc02efef572321e0f61ed5233832"
+    },
+    {
+      "trace": "shifted_obstacle/seed-1",
+      "max_absolute_state_difference": 7.470912777307603e-12,
+      "input_trace_sha256": "469d1915be10b04a100da736087d3ea298c4b054fa673322c62ed787b2386c6f"
+    },
+    {
+      "trace": "slippery_floor/seed-0",
+      "max_absolute_state_difference": 7.1450900751557356e-12,
+      "input_trace_sha256": "e7247ffd3b4774a17479e57829f32e3b97fab7bcaa22cf3a217be2ee18035bc2"
+    },
+    {
+      "trace": "slippery_floor/seed-1",
+      "max_absolute_state_difference": 1.084547729401919e-11,
+      "input_trace_sha256": "eb615901019d5c18056172bb901cbab4d9a06a0a6d090f236f745aa43c63d7e8"
+    }
+  ],
+  "caveat": "Fixed recorded trajectories; changing the estimator in a closed loop may change the path and measurements. Validation samples are few and temporally correlated."
+}

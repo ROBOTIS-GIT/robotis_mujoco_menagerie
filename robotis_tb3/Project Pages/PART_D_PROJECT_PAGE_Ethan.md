@@ -11,7 +11,7 @@ Compared with the baseline bearing-law tracker over 80 trials (4 conditions × 1
 
 **Open items.** One compensated shifted-obstacle seed (seed 1) rotates for 17 s with 51 reference replacements. **Ethan did not have time to finish investigating this issue**
 
-Full write-up: [`PART_D_CONTROL.md`](robotis_tb3/PART_D_CONTROL.md). Results, plots and raw files: [`evidence/part-d/`](robotis_tb3/evidence/part-d/). Code: [`robotis_tb3/lqr/`](robotis_tb3/lqr/).
+Full write-up: [`PART_D_CONTROL.md`](robotis_tb3/PART_D_CONTROL_Full_Details.md). Results, plots and raw files: [`evidence/part-d/`](robotis_tb3/evidence/part-d/). Code: [`robotis_tb3/lqr/`](robotis_tb3/lqr/).
 
 ![Cross-track error per trial](robotis_tb3/evidence/part-d/eval_cmp/tracking_boxplot.png)
 

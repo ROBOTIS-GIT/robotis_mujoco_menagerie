@@ -38,4 +38,4 @@ We choose a full base pose [x, y, theta] from a known ArUco marker. When it is v
 
 ## Sources used
 
-The whel equations build on the Week 2 wheel odometry tutorial. The pose update and state Jacobian follow the Week 8 motion example.  Robot dimentions and actuator limits are read from the ROBOTIS Waffle Pi MuJoCo scene.
+The wheel equations build on the Week 2 wheel odometry tutorial. The pose update and state Jacobian follow the Week 8 motion example.  Robot dimentions and actuator limits are read from the ROBOTIS Waffle Pi MuJoCo scene.

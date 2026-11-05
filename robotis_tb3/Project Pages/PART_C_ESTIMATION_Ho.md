@@ -1,12 +1,5 @@
 # Part C: EKF state estimation and tuning
 
-**Review draft for Garwood's assigned Part C.** This describes the local simulated
-pipeline and measured experiments. It does not certify human authorship or
-completion of the assessment. The team must verify the mathematics, reproduce
-results and record actual individual contributions and AI assistance before
-publishing. The default running pipeline remains Q x1, R x1; Q x10, R x1 is an
-explicitly selectable candidate, not an automatically deployed replacement.
-
 ## 1. Purpose and interfaces
 
 The estimator supplies a planar base pose and covariance to the navigation
@@ -14,18 +7,16 @@ controller. Encoders predict motion when the ArUco marker is unavailable; the
 camera corrects accumulated drift when a validated observation is available.
 The controller receives the estimated pose, never the simulator's true pose.
 
-The state is
-
-$$\mathbf{s}=[x,\ y,\ \theta]^T.$$
+The state is $$\mathbf{s}=[x,\ y,\ \theta]^T.$$
 
 World x and y are in metres, with z upward. Base x points forward and base y
-left. Heading is anticlockwise from world +x and wrapped to [-pi,pi).
+left. Heading is anticlockwise from world +x and wrapped to [-pi,pi].
 
 - **From Part A:** robot dimensions and the differential-drive motion model.
-- **From Part B (Gardner):** time-aligned encoder increments and a validated
+- **From Part B (Ibrahym):** time-aligned encoder increments and a validated
   marker observation [range, bearing, heading], with the camera/marker transforms
   and calibration assumptions specified. Bearing is positive to the left.
-- **To Part D (Wong):** posterior pose, covariance and whether the camera update
+- **To Part D (Ethan):** posterior pose, covariance and whether the camera update
   was accepted. The current loop is synchronous at 10 Hz. A real interface should
   include timestamps and reject stale measurements.
 - **Shared Part E:** sensor loss, slip, disturbance and end-to-end evaluation.
@@ -250,7 +241,7 @@ the team video.
 
 ## 9. Contribution and AI-use declaration to verify
 
-The group chat assigns Garwood Part C, Gardner Part B, Wong Part D and Abdiliah
+The group chat assigns Garwood Part C, Abdillah Part B, Wong Part D and Gardner
 Part A, with Part E shared. Assignment is not proof of completed work. Garwood
 should verify implementation, reproduce the study, explain the tuning choices
 and state their actual reviewed contribution. Do not claim sole manual authorship

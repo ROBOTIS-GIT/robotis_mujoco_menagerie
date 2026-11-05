@@ -15,7 +15,7 @@ from https://docs.robotis.com/docs/systems/turtlebot3/more_info/lds_01/ :
 `direction` uses rotation matrix multiplication $(d1 = R12 d1)$ to transform the lidar ray direction from the sensor's coordinate frame into the world coordinate frame.
 
 ### Canvas material
- **Week 2 Part C** - `h_lidar` was used as a refrence for setting up `observe`. Return type and operations needed to be modified to suit the mujoco environment.
+ **Week 2 Part C** - `h_lidar` was used as a reference for setting up `observe`. Return type and operations needed to be modified to suit the mujoco environment.
 
  **Week 2 Part C.1** - `animate_lidar` was used as a template for simulating lidar readings for all the angles. code had to be modified to use `mujoco.mj_ray` for the simulation.
 

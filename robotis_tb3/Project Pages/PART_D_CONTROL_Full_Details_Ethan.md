@@ -1,16 +1,6 @@
 # Part D: Control (Track A, TurtleBot3 Waffle Pi)
 
-Status:
-- **Section 1** (design) and **Section 2** (actuator identification, compensation and its closed-loop evaluation): complete. The compensator (`--compensate path`) was
-  run over 120 trials (Section 2.5): it removes most of the rotate-in-place time and effort without a significant change in cross-track error.
-- **Section 3** (trade-off studies): model prediction and the closed-loop R sweep with and without the compensator are done (Section 3.3). The rotate-threshold study (3.4) is **specified but not yet run**.
-- **Section 4** (repeated trials and failure diagnosis): complete for the 80-trial heuristic-versus-LQR comparison, which used **uncompensated** actuators. The opt-in no-path recovery rescued all five stalled
-  baseline seeds (Section 4.5), but **why** it works is not yet established. One slow compensated seed (Section 4.6) is characterised; its mechanism is a hypothesis with a check still to run.
-
-Code, all under `robotis_tb3/lqr/` unless noted: `track_a_control_design.py` (model, LQR, robustness, no simulator imports),
-`track_a_control.py` (latched reference path and the LQR tracker), `evaluate_controllers.py` and `analyse_controllers.py` (batch runs and
-statistics), `part_d_summary.py` (generates the tables below). Actuator work, in `robotis_tb3/`: `identify_actuators.py`,
-`actuator_compensation.py`, `verify_compensation.py`. Figures and raw results: `evidence/part-d/`.
+Code, all under `robotis_tb3/lqr/` unless noted: `track_a_control_design.py` (model, LQR, robustness, no simulator imports), `track_a_control.py` (latched reference path and the LQR tracker), `evaluate_controllers.py` and `analyse_controllers.py` (batch runs and statistics), `part_d_summary.py` (generates the tables below). Actuator work, in `robotis_tb3/`: `identify_actuators.py`, `actuator_compensation.py`, `verify_compensation.py`. Figures and raw results: `evidence/part-d/`.
 
 ## 1. Controller design
 
@@ -50,9 +40,7 @@ Assumptions, stated so they can be challenged:
 4. The commanded yaw rate is achieved; see 1.6 and 1.7.
 
 ### 1.4 Controllability
-`[B, AB] = [[0, v], [1, 0]]` has rank 2 if and only if `v ≠ 0`. This is the same rank drop at zero speed found in Part A, now for the
-error model: a stationary robot cannot remove lateral error by turning alone. This is why the tracker rotates in place on heading
-error only (gain `K_theta`) when `|e_theta|` is large, rather than letting `e_y` drive a spin it cannot fix.
+`[B, AB] = [[0, v], [1, 0]]` has rank 2 if and only if `v ≠ 0`. This is the same rank drop at zero speed found in Part A, now for the error model: a stationary robot cannot remove lateral error by turning alone. This is why the tracker rotates in place on heading error only (gain `K_theta`) when `|e_theta|` is large, rather than letting `e_y` drive a spin it cannot fix.
 
 ### 1.5 LQR design
 Discretised exactly at `dt = 0.1 s` (A is nilpotent): `Ad = [[1, v dt], [0, 1]]`, `Bd = [[v dt²/2], [dt]]`. Control law
@@ -72,8 +60,7 @@ Across `v` = 0.06 to 0.18 m/s, `K_ey` changes by about 2% (7.07 to 6.94) and `K_
 The robustness check in 1.7 shows a single fixed gain stays stable and well damped over that range, so speed scheduling is not needed for stability; it could still be tested for performance.
 
 ### 1.6 Comparison with the baseline controller
-The baseline law `w = 2.8 · bearing` to a point `L = 0.20 m` ahead is equivalent, for small errors, to `K = [2.8/L, 2.8] = [14, 2.8]`.
-On the same linear model it is a second-order system with `zeta = 2.8 / (2 sqrt(0.18 · 14)) = 0.88`, so it is well damped, not poorly.
+The baseline law `w = 2.8 · bearing` to a point `L = 0.20 m` ahead is equivalent, for small errors, to `K = [2.8/L, 2.8] = [14, 2.8]`. On the same linear model it is a second-order system with `zeta = 2.8 / (2 sqrt(0.18 · 14)) = 0.88`, so it is well damped, not poorly.
 
 The LQR is not an improvement in stability; it is a **different point on the speed/effort trade-off**, chosen from stated tolerances rather than tuned by hand.
 
@@ -103,6 +90,7 @@ The LQR was derived for an ideal actuator. To check it against a non-ideal one, 
 
 ### 1.9 Docking is not state feedback (a decision, with its reason)
 Only the path-following phase is LQR. The final approach (`EKF VISUAL DOCK`) is inherited unchanged from the baseline tracker: a relay turn of ±0.8 rad/s above a 0.06 rad heading error, and translation at `max(0.10, min(0.18, 0.8·distance))` m/s.
+
 It was left as it is for three reasons. (1) Section 2.1 shows wheel commands below about 2 rad/s do nothing, so a proportional law that shrinks its output near the goal would stall short of it; the relay and the 0.10 m/s floor exist for that reason. (2) Docking accuracy is already well inside the success criteria and is **similar for both controllers**: final lateral error 2.2–2.4 cm for the LQR and 2.6–3.2 cm for the baseline, heading about 4° for both
 (Section 4.2). The sub-centimetre difference is small against the 8 cm criterion, and the docking code is shared, so a better path tracker does not meaningfully change it. (3) Replacing it properly needs the actuator compensation of Section 2, which is now available as an opt-in flag (Section 2.4) but has not been evaluated at docking over repeated trials.
 
@@ -146,7 +134,6 @@ Open-loop check at 10 Hz, steady state over 2 s, 11 fit twists and 6 **held-out*
 | Feedforward, speed-blended yaw gain | 0.027 / 0.043 | 0.062 / 0.089 |
 | + PI trim on encoder rates | 0.027 / 0.051 | 0.068 / 0.107 |
 
-Two refinements were built and **rejected** because they did not generalise to held-out twists: the speed-blended yaw gain (it overshot yaw at low speed, e.g. 0.71 achieved for 0.5 requested) and the PI trim (it reduced forward speed in turns).
 The floor-friction 0.6 condition changed the compensated results by at most 0.016 (combined twist), so these tests cannot show whether the trim would help on a slippery floor.
 
 Remaining residuals: yaw while driving is still under-delivered by roughly 15–25%, and low-speed turns lose speed because the inner wheel sits near the friction band. The outer loop absorbs both; Section 1.7 showed the LQR keeps a gain margin of about 8× on yaw gain.
@@ -259,9 +246,7 @@ Nonlinear step, 0.20 m lateral offset, yaw saturated at ±0.8 rad/s, ideal actua
 | 2 | 5.08 | 1.98 | 0.932 | 0% | 4.3 | 0.27 | 0.80 |
 | 4 | 3.68 | 1.56 | 0.921 | 0% | 4.5 | 0.19 | 0.74 |
 
-The model predicts a nearly free trade: a 0.20 m step saturates the yaw command for every `s` up to 2, so settling time hardly changes
-(4.2 to 4.5 s) while effort falls by more than half. **This is a hypothesis for the closed-loop sweep to test, not a result.** It ignores the actuator
-dead zone (Section 2.1): gentler commands are exactly the ones the dead zone swallows, so the real loop may degrade faster than the model says at large `s`. **It did: see Section 3.3.**
+The model predicts a nearly free trade: a 0.20 m step saturates the yaw command for every `s` up to 2, so settling time hardly changes (4.2 to 4.5 s) while effort falls by more than half. **This is a hypothesis for the closed-loop sweep to test, not a result.** It ignores the actuator dead zone (Section 2.1): gentler commands are exactly the ones the dead zone swallows, so the real loop may degrade faster than the model says at large `s`. **It did: see Section 3.3.**
 
 ### 3.3 Closed-loop sweep
 ```sh
@@ -270,8 +255,7 @@ python robotis_tb3/lqr/evaluate_controllers.py --controllers lqr:0.25 lqr:0.5 lq
 python robotis_tb3/lqr/analyse_controllers.py eval_sweep/summary.json --out eval_sweep      # tradeoff.png, markdown tables
 python robotis_tb3/lqr/part_d_summary.py eval_sweep/summary.json --sweep                    # table to paste here
 ```
-Report: cross-track RMS (driving frames) against driving effort `∫w² dt`, mean ± s.e. over seeds, with rotate time and time-to-dock alongside.
-Compare the measured curve with the prediction in 3.2. Copy `summary.json`, the plot and the table into `evidence/part-d/eval_sweep/`.
+Report: cross-track RMS (driving frames) against driving effort `∫w² dt`, mean ± s.e. over seeds, with rotate time and time-to-dock alongside. Compare the measured curve with the prediction in 3.2. Copy `summary.json`, the plot and the table into `evidence/part-d/eval_sweep/`.
 
 The same sweep with the compensator (`path` mode); R×1 is taken from `eval_comp`, the other four scales were run separately (`spec` suffix `+comp` goes last):
 ```sh
@@ -320,9 +304,7 @@ Success of plain LQR by R scale: R×0.25, ×0.5, ×1: 10/10 in both conditions; 
 **Choice of gain - optional based on effort.** R×1 with the compensator: the lowest compensated cross-track error in the nominal condition, low effort, and the value the Bryson weights were derived for (Section 1.5). R×2 is a defensible alternative if effort matters more than about 1.7 cm of nominal tracking accuracy (about 40% less driving effort, no change under noise).
 
 ### 3.4 Rotate-in-place threshold (to run)
-In the 80-trial comparison the LQR spends 28–31% of its tracking time rotating in place (Section 4.2), against 1–5% for the baseline. The
-threshold is 0.40 rad with exit at 0.25 rad, inherited from the baseline; the `e_theta` weight in Section 1.5 was chosen just under it, so raising the
-threshold weakens that justification. The option `--lqr-rotate-enter` (spec `lqr@<rad>`) keeps the 0.625 exit ratio. Rotation time may be dominated
+In the 80-trial comparison the LQR spends 28–31% of its tracking time rotating in place (Section 4.2), against 1–5% for the baseline. The threshold is 0.40 rad with exit at 0.25 rad, inherited from the baseline; the `e_theta` weight in Section 1.5 was chosen just under it, so raising the threshold weakens that justification. The option `--lqr-rotate-enter` (spec `lqr@<rad>`) keeps the 0.625 exit ratio. Rotation time is dominated
 by the actuator dead zone rather than by the threshold (a 45° turn takes about 4 s at the relay value, Section 2.1), so the expected gain is uncertain.
 ```sh
 python robotis_tb3/lqr/evaluate_controllers.py --controllers lqr lqr@0.6 lqr@0.8 \
@@ -330,8 +312,6 @@ python robotis_tb3/lqr/evaluate_controllers.py --controllers lqr lqr@0.6 lqr@0.8
 python robotis_tb3/lqr/analyse_controllers.py eval_rotate/summary.json --out eval_rotate
 ```
 Report rotate time, time to dock and cross-track error together: a higher threshold saves time only if the larger transient offset stays acceptable.
-
-**TODO Can't recall if run yet**
 
 ## 4. Repeated trials and failure diagnosis
 

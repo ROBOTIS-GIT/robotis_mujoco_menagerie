@@ -45,6 +45,8 @@
       <geom pos="-0.049 0 0.1255" mesh="lds" material="black" class="visual"/>
       <geom pos="-0.049 0 0.1255" mesh="lds" class="collision"/>
       <geom size="0.0075 0.015 0.0135" pos="0.078 0 0.107" type="box" material="grey"/>
+      <camera name="navigation" pos="0.09 0 0.30" xyaxes="0 -1 0 -0.173648 0 0.984808" fovy="60"/>
+      <site name="lidar" pos="-0.049 0 0.15" size="0.005" rgba="0 1 0 1"/>
       <body name="wheel_left" pos="0 0.144 0.033" quat="0.707388 -0.706825 0 0">
         <inertial pos="0 0 0" quat="-0.000890159 0.706886 0.000889646 0.707326" mass="0.0284989" diaginertia="2.07126e-05 1.11924e-05 1.11756e-05"/>
         <joint name="wheel_left" class="wheel_left"/>

@@ -2,11 +2,12 @@ from machinevisiontoolbox import CentralCamera, Image
 import mujoco
 import numpy as np
 import xml.etree.ElementTree as ET
-from spatialmath import SE2
-from camera_navigation import HERE
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
 
 WIDTH, HEIGHT, FOV = 640, 480, 60.0
-MARKER_SIZE = 0.22
+MARKER_SIZE = 0.2
 CAMERA_TILT_DEGREES = 10
 
 def build_room(obstacle_shift=0.0, friction=1.0):
@@ -48,7 +49,7 @@ class Lidar:
     MIN_RANGE = 0.012
     def __init__(self, model):
         self.site = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, 'lidar') #
-        self.groups = np.array([0, 0, 0, 0, 0, 1], dtype=np.uint8)
+        self.groups = np.ones(6, dtype=np.uint8)
 
     def read(self, model, data, rng, sigma_rho=0.02):
         T = data.site_xpos[self.site]                  # LiDAR translation vector in world coordinates

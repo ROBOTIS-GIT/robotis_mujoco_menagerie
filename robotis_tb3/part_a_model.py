@@ -1,3 +1,9 @@
+from turtle import stamp
+
+import numpy as np
+from roboticstoolbox import DiffSteer, Unicycle
+
+
 def diff_drive_step(x, dphi_L, dphi_R, r, W):
     """Propagate pose x = [x, y, theta] by one odometry increment."""
     d    = 0.5 * r * (dphi_L + dphi_R)          # body displacement
